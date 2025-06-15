@@ -9,24 +9,25 @@
 
         <hr>
 
-        <!-- Success message if a post is created successfully -->
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
                 <p>{{ $message }}</p>
             </div>
         @endif
 
-        <!-- Display posts if they exist -->
         @if (count($posts) > 0)
             @foreach ($posts as $post)
                 <div class="row">
                     <div class="col-12">
                         <div class="row">
                             <div class="col-2">
-                                <img class="img-fluid" style="max-width:50%;" src="{{ asset('images/'.$post->image)}}" alt="">
+                                <img class="img-fluid" style="max-width:50%;" src="{{ asset('images/'.$post->image)}}"
+                                     alt="">
                             </div>
                             <div class="col-10">
-                                <h4>{{ $post->title }}</h4>
+                                <a href="{{route('post.show', $post->id)}}">
+                                    <h4>{{ $post->title }}</h4>
+                                </a>
                             </div>
                         </div>
                         <p>{{ $post->description }}</p>
