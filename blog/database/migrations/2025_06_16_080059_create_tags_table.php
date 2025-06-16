@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->string('theme_color')->default('#6366f1');
             $table->timestamps();
         });
     }

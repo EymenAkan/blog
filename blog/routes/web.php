@@ -22,3 +22,5 @@ Route::prefix('tags')->group(function () {
     Route::put('/update/{tag}', [TagController::class, 'update'])->name('tags.update');
     Route::delete('/delete/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
 });
+
+Route::get('/posts/tag/{tag:slug}', [PostController::class, 'filterByTag'])->name('posts.filterByTag');

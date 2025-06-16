@@ -23,14 +23,16 @@ class TagController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:tags,name',
+            'theme_color' => 'required|string|regex:/^#[0-9A-Fa-f]{6}$/',
         ]);
 
         $tag = new Tag();
         $tag->name = $validated['name'];
-        $tag->slug = Str::slug($validated['name']); // slug üretimi
+        $tag->slug = Str::slug($validated['name']);
+        $tag->theme_color = $validated['theme_color'];
         $tag->save();
 
-        return redirect()->route('tags.index')->with('success', 'Tag created.');
+        return redirect()->route('tags.index')->with('success', 'Tag created successfully!');
     }
 
     public function edit(Tag $tag)
@@ -42,19 +44,20 @@ class TagController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:tags,name,' . $tag->id,
+            'theme_color' => 'required|string|regex:/^#[0-9A-Fa-f]{6}$/',
         ]);
 
         $tag->name = $validated['name'];
-        $tag->slug = Str::slug($validated['name']); // slug güncellemesi
+        $tag->slug = Str::slug($validated['name']);
+        $tag->theme_color = $validated['theme_color'];
         $tag->save();
 
-        return redirect()->route('tags.index')->with('success', 'Tag updated.');
+        return redirect()->route('tags.index')->with('success', 'Tag updated successfully!');
     }
 
     public function destroy(Tag $tag)
     {
         $tag->delete();
-
-        return redirect()->route('tags.index')->with('success', 'Tag deleted.');
+        return redirect()->route('tags.index')->with('success', 'Tag deleted successfully!');
     }
 }

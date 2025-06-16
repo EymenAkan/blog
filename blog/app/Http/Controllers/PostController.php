@@ -14,6 +14,15 @@ class PostController extends Controller
         return view('frontend.posts.index', compact('posts'));
     }
 
+    public function filterByTag(Tag $tag)
+    {
+        $posts = Post::whereHas('tags', function ($query) use ($tag) {
+            $query->where('tags.id', $tag->id);
+        })->with('tags')->latest()->get();
+
+        return view('frontend.posts.index', compact('posts', 'tag'));
+    }
+
     public function create()
     {
         $tags = Tag::all();
