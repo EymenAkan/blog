@@ -3,52 +3,63 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Eymen\'s Blog')</title>
+
+    <title>@yield('title', config('app.name', 'Eymen\'s Blog'))</title>
+
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
-            /* Softer, more readable theme */
-            --primary-color: #2d3748;
-            --secondary-color: #4a5568;
-            --accent-color: #718096;
-            --text-primary: #2d3748;
-            --text-secondary: #718096;
-            --text-muted: #a0aec0;
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --accent-color: #06b6d4;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
             --bg-primary: #ffffff;
-            --bg-secondary: #f7fafc;
-            --bg-tertiary: #edf2f7;
-            --border-color: #e2e8f0;
-            --border-light: #f1f5f9;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
         }
 
-        /* Tag-specific theming - applied when viewing tagged content */
         .tag-theme-active {
-            --primary-color: {{ $activeTagColor ?? '#2d3748' }};
-            --secondary-color: {{ $activeTagColorDark ?? '#4a5568' }};
-            --accent-color: {{ $activeTagColorLight ?? '#718096' }};
+            --primary-color: {{ $activeTagColor ?? '#3b82f6' }};
+            --secondary-color: {{ $activeTagColorDark ?? '#1e40af' }};
+            --accent-color: {{ $activeTagColorLight ?? '#06b6d4' }};
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
 
-        .navbar-clean {
-            background: var(--bg-primary) !important;
+        .navbar-balanced {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
+            padding: 0.75rem 0;
             border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1020;
         }
 
         .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.25rem;
             color: var(--primary-color) !important;
             text-decoration: none;
         }
@@ -56,145 +67,157 @@
         .nav-link {
             color: var(--text-secondary) !important;
             font-weight: 500;
-            font-size: 0.95rem;
             transition: all 0.3s ease;
-            padding: 0.5rem 1rem !important;
-            border-radius: 6px;
+            padding: 0.5rem 0.75rem !important;
+            border-radius: 8px;
+            font-size: 0.9rem;
         }
 
         .nav-link:hover {
             color: var(--primary-color) !important;
-            background-color: var(--bg-secondary);
+            background-color: var(--bg-tertiary);
         }
 
-        .hero-clean {
+        .navbar-toggler {
+            border: none;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .hero-balanced {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
+            padding: 2rem 0;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
             margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 400;
         }
 
         .content-card {
             background: var(--bg-primary);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
 
         .content-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
         }
 
+        /* FIXED: Sidebar positioning - no sticky positioning */
         .sidebar-card {
             background: var(--bg-primary);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--border-color);
-            position: sticky;
-            top: 2rem;
+            position: relative; /* Changed from sticky */
+            z-index: 1; /* Lower z-index */
         }
 
-        .btn-clean {
+        .btn-balanced {
             background: var(--primary-color);
             border: 1px solid var(--primary-color);
             color: white;
-            padding: 0.6rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
             font-weight: 500;
-            font-size: 0.9rem;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
         }
 
-        .btn-clean:hover {
+        .btn-balanced:hover {
             background: var(--secondary-color);
             border-color: var(--secondary-color);
             color: white;
             transform: translateY(-1px);
         }
 
-        .btn-clean-outline {
+        .btn-balanced-outline {
             background: transparent;
-            border: 1px solid var(--primary-color);
+            border: 2px solid var(--primary-color);
             color: var(--primary-color);
-            padding: 0.6rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
             font-weight: 500;
-            font-size: 0.9rem;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
         }
 
-        .btn-clean-outline:hover {
+        .btn-balanced-outline:hover {
             background: var(--primary-color);
             color: white;
             transform: translateY(-1px);
         }
 
-        .tag-badge-clean {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
+        .tag-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 16px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             text-decoration: none;
             display: inline-block;
             margin: 0.2rem 0.2rem 0.2rem 0;
             transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
         }
 
-        .tag-badge-clean:hover {
-            background: var(--primary-color);
+        .tag-badge:hover {
             color: white;
-            border-color: var(--primary-color);
             transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .active-tag-banner {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 1rem 0;
-            margin-bottom: 2rem;
-            text-align: center;
-            border-radius: 8px;
-        }
-
+        /* FIXED: Filter table with better spacing */
         .filter-table {
             width: 100%;
             margin-bottom: 0;
+            font-size: 0.85rem;
         }
 
         .filter-table th {
             background: var(--bg-tertiary);
             color: var(--text-primary);
             font-weight: 600;
-            font-size: 0.9rem;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
+            padding: 0.75rem 0.5rem;
+            border: none;
+            font-size: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .filter-table td {
-            padding: 0.6rem 0.75rem;
-            border: 1px solid var(--border-light);
+            padding: 0.6rem 0.5rem;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
             vertical-align: middle;
         }
 
@@ -202,69 +225,120 @@
             background: var(--bg-secondary);
         }
 
-        .tag-color-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: inline-block;
-            border: 2px solid white;
-            box-shadow: 0 0 0 1px var(--border-color);
-        }
-
         .post-count-badge {
             background: var(--bg-tertiary);
-            color: var(--text-secondary);
+            color: var(--text-primary);
             padding: 0.2rem 0.5rem;
             border-radius: 12px;
             font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tag-color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-card {
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 15, var(--accent-color) 15);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-number {
+            font-size: 1.5rem;
             font-weight: 600;
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
         }
 
-        .footer-clean {
-            background: var(--primary-color);
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .hero-balanced {
+                padding: 1.5rem 0;
+                margin-bottom: 1rem;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .content-card {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .sidebar-card {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+
+            .btn-balanced, .btn-balanced-outline {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .tag-badge {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.6rem;
+            }
+
+            .filter-table {
+                font-size: 0.8rem;
+            }
+
+            .filter-table th,
+            .filter-table td {
+                padding: 0.5rem 0.25rem;
+            }
         }
 
-        /* Post content specific styles */
-        .post-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .content-card .row .col-md-4,
+            .content-card .row .col-md-8 {
+                margin-bottom: 0.5rem;
+            }
+
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .d-flex.justify-content-between .btn {
+                align-self: flex-start;
+            }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
         }
 
         .post-image {
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            object-fit: cover;
         }
 
-        .breadcrumb-clean {
-            background: transparent;
-            padding: 0;
-            margin-bottom: 1rem;
-        }
-
-        .breadcrumb-clean .breadcrumb-item a {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        .breadcrumb-clean .breadcrumb-item a:hover {
-            color: var(--primary-color);
-        }
-
-        .breadcrumb-clean .breadcrumb-item.active {
-            color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            .sidebar-card {
-                position: static;
-                margin-top: 2rem;
-            }
+        .post-image:hover {
+            transform: scale(1.02);
         }
     </style>
 
@@ -273,36 +347,57 @@
 <body class="{{ $hasTagTheme ?? false ? 'tag-theme-active' : '' }}">
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-clean">
+    <nav class="navbar navbar-expand-lg navbar-balanced">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('posts.index') }}">
-                <i class="fas fa-blog me-2"></i>
+            <a class="navbar-brand" href="{{ route('index') }}">
+                <i class="fas fa-feather-alt me-2"></i>
                 Eymen's Blog
             </a>
 
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="{{ route('posts.index') }}">
-                    <i class="fas fa-home me-1"></i>
-                    Posts
-                </a>
-                <a class="nav-link" href="{{ route('tags.index') }}">
-                    <i class="fas fa-tags me-1"></i>
-                    Manage Tags
-                </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon">
+                    <i class="fas fa-bars"></i>
+                </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}" href="{{ route('index') }}">
+                        <i class="fas fa-home me-1"></i>
+                        Home
+                    </a>
+                    <a class="nav-link {{ request()->routeIs('posts.*') ? 'active' : '' }}"
+                       href="{{ route('posts.index') }}">
+                        <i class="fas fa-blog me-1"></i>
+                        Blog
+                    </a>
+                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">
+                        <i class="fas fa-user me-1"></i>
+                        About
+                    </a>
+                    <a class="nav-link {{ request()->routeIs('tags.*') ? 'active' : '' }}"
+                       href="{{ route('tags.index') }}">
+                        <i class="fas fa-tags me-1"></i>
+                        Tags
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 </header>
 
 @if(isset($showTagBanner) && $showTagBanner && isset($tag))
-    <div class="container mt-3">
-        <div class="active-tag-banner">
-            <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-filter me-2"></i>
-                <span>Showing posts tagged with: <strong>{{ $tag->name }}</strong></span>
-                <a href="{{ route('posts.index') }}" class="btn btn-sm btn-outline-light ms-3">
+    <div class="container mt-2">
+        <div class="alert alert-info"
+             style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border: none; color: white; border-radius: 12px;">
+            <div class="d-flex align-items-center justify-content-center flex-wrap">
+                <span class="me-2">
+                    <i class="fas fa-filter me-1"></i>
+                    Filtering by: <strong>{{ $tag->name }}</strong>
+                </span>
+                <a href="{{ route('posts.index') }}" class="btn btn-sm btn-outline-light">
                     <i class="fas fa-times me-1"></i>
-                    Show All Posts
+                    Clear
                 </a>
             </div>
         </div>
@@ -310,24 +405,24 @@
 @endif
 
 @hasSection('hero')
-    <section class="hero-clean">
+    <section class="hero-balanced">
         <div class="container">
-            @yield('hero')
+            <div class="hero-content text-center">
+                @yield('hero')
+            </div>
         </div>
     </section>
 @endif
 
-<main class="container my-4">
+<main class="container my-3">
     @yield('content')
 </main>
 
-<footer class="footer-clean">
-    <div class="container text-center">
-        <p class="mb-0">&copy; 2025 Eymen's Blog. Sharing thoughts and experiences.</p>
-    </div>
-</footer>
+@include('frontend.layouts.footer')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 @stack('scripts')
+
 </body>
 </html>

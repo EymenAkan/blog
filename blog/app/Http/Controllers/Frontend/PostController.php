@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
@@ -34,7 +37,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'tags' => 'array',
             'tags.*' => 'exists:tags,id',
         ]);
@@ -44,6 +47,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->title = $validated['title'];
+        $post->slug = Str::slug($validated['title']);
         $post->description = $validated['description'];
         $post->image = $file_name;
         $post->save();
@@ -55,15 +59,15 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post Created');
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::where('slug', $slug)->firstOrFail();
         return view('frontend.posts.show', compact('post'));
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::where('slug', $slug)->firstOrFail();
         $tags = Tag::all();
         return view('frontend.posts.edit', compact('post', 'tags'));
     }
