@@ -23,11 +23,29 @@
                     <input class="form-control" type="text" name="title">
 
                     <label for="floatingTextArea">Description</label>
-                    <textarea class="form-control" name="description" id="floatingTextarea" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="description" id="floatingTextarea" cols="30"
+                              rows="10"></textarea>
 
                     <label for="formFile" class="form-label">Add Image</label>
                     <input class="form-control" type="file" name="image">
                 </div>
+
+                <div class="card p-3 mt-3">
+                    <label>Tags</label>
+                    <div class="d-flex flex-wrap">
+                        @foreach($tags as $tag)
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" name="tags[]" id="tag{{ $tag->id }}"
+                                       value="{{ $tag->id }}"
+                                    {{ (is_array(old('tags')) && in_array($tag->id, old('tags'))) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="tag{{ $tag->id }}">
+                                    {{ $tag->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
 
                 <button class="btn btn-secondary m-3">Save</button>
             </form>

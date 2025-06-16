@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -15,27 +16,34 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('frontend.posts.create');
+        $tags = Tag::all();
+        return view('frontend.posts.create', compact('tags'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'tags' => 'array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
-        $file_name = time() . '.' . request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images'), $file_name);
+        $file_name = time() . '.' . $request->image->getClientOriginalExtension();
+        $request->image->move(public_path('frontend/assets/img'), $file_name);
 
         $post = new Post();
-        $post->title = $request->title;
-        $post->description = $request->description;
+        $post->title = $validated['title'];
+        $post->description = $validated['description'];
         $post->image = $file_name;
         $post->save();
+        if (isset($validated['tags'])) {
+            $post->tags()->sync($validated['tags']);
+        }
 
-        return redirect()->route('frontend.posts.index')->with('success', 'Post Created');
+
+        return redirect()->route('posts.index')->with('success', 'Post Created');
     }
 
     public function show($id)
@@ -47,21 +55,24 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('frontend.posts.edit', compact('post'));
+        $tags = Tag::all();
+        return view('frontend.posts.edit', compact('post', 'tags'));
     }
 
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
 
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'tags' => 'array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
-        $post->title = $request->input('title');
-        $post->description = $request->input('description');
+        $post->title = $validated['title'];
+        $post->description = $validated['description'];
 
         if ($request->hasFile('image')) {
             $file_name = time() . '.' . $request->image->getClientOriginalExtension();
@@ -69,9 +80,10 @@ class PostController extends Controller
             $post->image = $file_name;
         }
 
+        $post->tags()->sync($validated['tags'] ?? []);
         $post->save();
+
 
         return redirect()->route('frontend.posts.index')->with('success', 'Post Updated');
     }
-
 }

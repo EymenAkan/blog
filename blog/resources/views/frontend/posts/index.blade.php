@@ -21,7 +21,8 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-2">
-                                <img class="img-fluid" style="max-width:50%;" src="{{ asset('images/'.$post->image)}}"
+                                <img class="img-fluid" style="max-width:100%;"
+                                     src="{{ asset('frontend/assets/img/'.$post->image)}}"
                                      alt="">
                             </div>
                             <div class="col-10">
@@ -29,8 +30,16 @@
                                     <h4>{{ $post->title }}</h4>
                                 </a>
                             </div>
+                            <br>
+                            <p>{{ $post->description }}</p>
+                            <div>
+                                @foreach ($post->tags as $tag)
+                                    <a href="#" class="badge bg-secondary text-decoration-none me-1">
+                                        {{ $tag->name }}
+                                    </a>
+                                @endforeach
+                            </div>
                         </div>
-                        <p>{{ $post->description }}</p>
                         <hr>
                     </div>
                 </div>

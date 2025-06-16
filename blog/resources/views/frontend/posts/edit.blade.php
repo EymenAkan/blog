@@ -25,8 +25,29 @@
                 <input name="image" type="file"
                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 @if($post->image)
-                    <img src="{{ asset('images/' . $post->image) }}" alt="Current Image" class="mt-2 max-h-40">
+                    <img src="{{ asset('frontend/assets/img/' . $post->image) }}" alt="Current Image" class="mt-2 max-h-40">
                 @endif
+            </div>
+
+            <div class="mt-4">
+                <label class="block font-semibold mb-1">Tags</label>
+                <div class="d-flex flex-wrap">
+                    @foreach($tags as $tag)
+                        <div class="form-check me-3">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="tags[]"
+                                id="tag{{ $tag->id }}"
+                                value="{{ $tag->id }}"
+                                {{ (in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray())) ? 'checked' : '') }}
+                            >
+                            <label class="form-check-label" for="tag{{ $tag->id }}">
+                                {{ $tag->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             <div class="flex justify-between items-center">
