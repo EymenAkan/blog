@@ -11,4 +11,9 @@ class Post extends Model
         'description',
         'image',
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
