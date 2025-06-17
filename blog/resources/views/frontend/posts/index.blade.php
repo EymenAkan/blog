@@ -48,7 +48,7 @@
         <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 12px; border: none;">
             <i class="fas fa-check-circle me-2"></i>
             {{ $message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Read More" ></button>
         </div>
     @endif
 
@@ -61,7 +61,7 @@
                         <div class="row g-0">
                             <div class="col-md-4">
                                 <img class="img-fluid w-100 post-image"
-                                     style="object-fit: cover; height: 200px;"
+                                     style="object-fit: cover; width: 200px; height: 200px;"
                                      src="{{ asset('frontend/assets/img/'.$post->image)}}"
                                      alt="{{ $post->title }}">
                             </div>

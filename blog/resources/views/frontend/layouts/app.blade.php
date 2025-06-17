@@ -7,11 +7,27 @@
     <title>@yield('title', config('app.name', 'Eymen\'s Blog'))</title>
 
     <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" media="print"
+          onload="this.onload=null;this.media='all';">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"
+          media="print" onload="this.onload=null;this.media='all';">
+    <noscript>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    </noscript>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.onload=null;this.media='all';">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+    </noscript>
+
 
     <style>
         :root {
@@ -347,37 +363,50 @@
 <body class="{{ $hasTagTheme ?? false ? 'tag-theme-active' : '' }}">
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-balanced">
+    <nav class="navbar navbar-expand-lg navbar-balanced" role="navigation" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('index') }}">
-                <i class="fas fa-feather-alt me-2"></i>
+            <a class="navbar-brand" href="{{ route('index') }}" aria-label="Go to homepage">
+                <i class="fas fa-feather-alt me-2" aria-hidden="true"></i>
                 Eymen's Blog
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-label="Toggle navigation menu"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    title="Toggle menu">
                 <span class="navbar-toggler-icon">
-                    <i class="fas fa-bars"></i>
+                    <i class="fas fa-bars" aria-hidden="true"></i>
                 </span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}" href="{{ route('index') }}">
-                        <i class="fas fa-home me-1"></i>
+                    <a class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}"
+                       href="{{ route('index') }}"
+                       aria-current="{{ request()->routeIs('index') ? 'page' : 'false' }}">
+                        <i class="fas fa-home me-1" aria-hidden="true"></i>
                         Home
                     </a>
                     <a class="nav-link {{ request()->routeIs('posts.*') ? 'active' : '' }}"
-                       href="{{ route('posts.index') }}">
-                        <i class="fas fa-blog me-1"></i>
+                       href="{{ route('posts.index') }}"
+                       aria-current="{{ request()->routeIs('posts.*') ? 'page' : 'false' }}">
+                        <i class="fas fa-blog me-1" aria-hidden="true"></i>
                         Blog
                     </a>
-                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">
-                        <i class="fas fa-user me-1"></i>
+                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}"
+                       href="{{ route('about') }}"
+                       aria-current="{{ request()->routeIs('about') ? 'page' : 'false' }}">
+                        <i class="fas fa-user me-1" aria-hidden="true"></i>
                         About
                     </a>
                     <a class="nav-link {{ request()->routeIs('tags.*') ? 'active' : '' }}"
-                       href="{{ route('tags.index') }}">
-                        <i class="fas fa-tags me-1"></i>
+                       href="{{ route('tags.index') }}"
+                       aria-current="{{ request()->routeIs('tags.*') ? 'page' : 'false' }}">
+                        <i class="fas fa-tags me-1" aria-hidden="true"></i>
                         Tags
                     </a>
                 </div>
@@ -387,16 +416,18 @@
 </header>
 
 @if(isset($showTagBanner) && $showTagBanner && isset($tag))
-    <div class="container mt-2">
+    <div class="container mt-2" role="status" aria-live="polite">
         <div class="alert alert-info"
              style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border: none; color: white; border-radius: 12px;">
             <div class="d-flex align-items-center justify-content-center flex-wrap">
                 <span class="me-2">
-                    <i class="fas fa-filter me-1"></i>
+                    <i class="fas fa-filter me-1" aria-hidden="true"></i>
                     Filtering by: <strong>{{ $tag->name }}</strong>
                 </span>
-                <a href="{{ route('posts.index') }}" class="btn btn-sm btn-outline-light">
-                    <i class="fas fa-times me-1"></i>
+                <a href="{{ route('posts.index') }}"
+                   class="btn btn-sm btn-outline-light"
+                   aria-label="Clear tag filter">
+                    <i class="fas fa-times me-1" aria-hidden="true"></i>
                     Clear
                 </a>
             </div>
@@ -405,7 +436,7 @@
 @endif
 
 @hasSection('hero')
-    <section class="hero-balanced">
+    <section class="hero-balanced" role="region" aria-label="Hero section">
         <div class="container">
             <div class="hero-content text-center">
                 @yield('hero')
@@ -414,7 +445,7 @@
     </section>
 @endif
 
-<main class="container my-3">
+<main class="container my-3" role="main">
     @yield('content')
 </main>
 
