@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'About Eymen - Computer Programming Student')
 
