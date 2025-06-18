@@ -27,8 +27,8 @@ class PageController extends Controller
         $stats = [
             'total_posts' => Post::count(),
             'total_tags' => Tag::count(),
-            'total_words' => Post::sum(\DB::raw('CHAR_LENGTH(description) - CHAR_LENGTH(REPLACE(description, " ", "")) + 1')),
-            'project_duration' => 'Learning Project',
+            'total_words' => Post::selectRaw("CHAR_LENGTH(description) - CHAR_LENGTH(REPLACE(description, ?, ?)) + 1", [' ', ''])
+                ->sum(\DB::raw("CHAR_LENGTH(description) - CHAR_LENGTH(REPLACE(description, ' ', '')) + 1")), 'project_duration' => 'Learning Project',
             'technologies_used' => 8
         ];
 

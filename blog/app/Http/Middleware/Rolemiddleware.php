@@ -16,7 +16,7 @@ class Rolemiddleware
     public function handle(Request $request, Closure $next, $role): Response
     {
         if ($request->user()->role !== $role) {
-            abort(404);
+            abort(404, 'Page not found');
         }
         return $next($request);
     }

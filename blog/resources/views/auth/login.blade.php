@@ -1,4 +1,4 @@
-@extends('frontend.layouts.auth')
+@extends('layouts.auth')
 
 @section('title', 'Login to Your Account')
 
@@ -53,12 +53,6 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <label for="password" class="form-label">Password</label>
-                            <a href="{{ route('password.request') }}" class="forgot-link">
-                                Forgot Password?
-                            </a>
-                        </div>
                         <div class="input-group">
                         <span class="input-group-text">
                             <i class="fas fa-lock"></i>
@@ -79,7 +73,7 @@
                     <div class="form-group mb-4">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                {{ old('remember') ? 'checked' : '' }}>
+                                    {{ old('remember') ? 'checked' : '' }}>
                             <label class="form-check-label" for="remember">
                                 Remember me on this device
                             </label>
@@ -104,18 +98,35 @@
 
             <div class="auth-social">
                 <div class="divider">
-                    <span>or continue with</span>
+                    <span>or sign in with</span>
                 </div>
                 <div class="social-buttons">
-                    <a href="#" class="btn btn-outline-secondary social-btn">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="btn btn-outline-secondary social-btn">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="btn btn-outline-secondary social-btn">
+                    <a href="{{ route('socialite.redirect', 'github') }}"
+                       class="social-btn github-btn"
+                       data-provider="github"
+                       onclick="handleSocialLogin(this, 'github')">
                         <i class="fab fa-github"></i>
+                        <span>Continue with GitHub</span>
                     </a>
+
+                    <a href="{{ route('socialite.redirect', 'google') }}"
+                       class="social-btn google-btn"
+                       data-provider="google"
+                       onclick="handleSocialLogin(this, 'google')">
+                        <i class="fab fa-google"></i>
+                        <span>Continue with Google</span>
+                    </a>
+                </div>
+
+                <div class="social-benefits">
+                    <div class="benefit-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure OAuth</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Quick login</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,7 +145,7 @@
     <script>
         // Toggle password visibility
         document.querySelectorAll('.toggle-password').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const input = this.previousElementSibling;
                 const icon = this.querySelector('i');
 
@@ -148,6 +159,66 @@
                     icon.classList.add('fa-eye');
                 }
             });
+        });
+
+        // Handle social login
+        function handleSocialLogin(button, provider) {
+            // Add loading state
+            button.classList.add('loading');
+
+            // Store the original content
+            const originalContent = button.innerHTML;
+
+            // Update button text
+            const span = button.querySelector('span');
+            span.textContent = `Connecting to ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`;
+
+            // Optional: Add analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'social_login_attempt', {
+                    'provider': provider,
+                    'page': 'login'
+                });
+            }
+
+            // Handle errors (you can customize this)
+            setTimeout(() => {
+                // This would normally be handled by your OAuth flow
+                // Remove loading state if there's an error
+                if (button.classList.contains('loading')) {
+                    button.classList.remove('loading');
+                    button.innerHTML = originalContent;
+                }
+            }, 10000); // 10 second timeout
+        }
+
+        // Handle OAuth callback messages
+        window.addEventListener('message', function (event) {
+            if (event.data.type === 'oauth_success') {
+                // Handle successful OAuth
+                const buttons = document.querySelectorAll('.social-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('loading');
+                    btn.classList.add('success');
+                });
+
+                // Redirect or refresh
+                setTimeout(() => {
+                    window.location.href = event.data.redirect || '/dashboard';
+                }, 1000);
+            } else if (event.data.type === 'oauth_error') {
+                // Handle OAuth error
+                const buttons = document.querySelectorAll('.social-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('loading');
+                    btn.classList.add('error');
+                });
+
+                // Show error message
+                setTimeout(() => {
+                    buttons.forEach(btn => btn.classList.remove('error'));
+                }, 3000);
+            }
         });
     </script>
 @endpush

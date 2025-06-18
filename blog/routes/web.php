@@ -1,10 +1,33 @@
 <?php
 
-use App\Http\Controllers\Frontend\PostController;
-use App\Http\Controllers\Frontend\TagController;
-use App\Http\Controllers\Frontend\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Frontend\TagController;
+use App\Http\Controllers\Frontend\PostController;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
+
+Route::get('/', [PageController::class, 'index'])->name('index');
+Route::get('/about', [PageController::class, 'about'])->name('about');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+Route::get('/auth/{provider}', [SocialiteController::class, 'redirect'])->name('socialite.redirect');
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('socialite.callback');
+
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
 Route::prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
@@ -24,6 +47,3 @@ Route::prefix('tags')->group(function () {
     Route::delete('/delete/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
 });
 Route::get('/posts/tag/{tag:slug}', [PostController::class, 'filterByTag'])->name('posts.filterByTag');
-
-Route::get('/', [PageController::class, 'index'])->name('index');
-Route::get('/about', [PageController::class, 'about'])->name('about');

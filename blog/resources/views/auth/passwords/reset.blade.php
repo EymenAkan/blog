@@ -19,6 +19,7 @@
             <div class="auth-body">
                 @if($errors->any())
                     <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
                         <ul class="mb-0">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -76,6 +77,9 @@
                             <input type="password" class="form-control"
                                    id="password_confirmation" name="password_confirmation"
                                    placeholder="••••••••" required>
+                            <button type="button" class="btn btn-outline-secondary toggle-password" tabindex="-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -90,13 +94,29 @@
 
                     <div class="form-group mb-4">
                         <div class="password-tips">
-                            <h6><i class="fas fa-shield-alt me-2"></i>Password Tips:</h6>
-                            <ul class="small">
-                                <li>Use at least 8 characters</li>
-                                <li>Include uppercase and lowercase letters</li>
-                                <li>Add numbers and special characters</li>
-                                <li>Don't reuse passwords from other sites</li>
-                            </ul>
+                            <h6><i class="fas fa-shield-alt me-2"></i>Password Requirements:</h6>
+                            <div class="requirements-list">
+                                <div class="requirement" data-requirement="length">
+                                    <i class="fas fa-times text-danger"></i>
+                                    <span>At least 8 characters</span>
+                                </div>
+                                <div class="requirement" data-requirement="lowercase">
+                                    <i class="fas fa-times text-danger"></i>
+                                    <span>One lowercase letter</span>
+                                </div>
+                                <div class="requirement" data-requirement="uppercase">
+                                    <i class="fas fa-times text-danger"></i>
+                                    <span>One uppercase letter</span>
+                                </div>
+                                <div class="requirement" data-requirement="number">
+                                    <i class="fas fa-times text-danger"></i>
+                                    <span>One number</span>
+                                </div>
+                                <div class="requirement" data-requirement="special">
+                                    <i class="fas fa-times text-danger"></i>
+                                    <span>One special character</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -127,6 +147,44 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .requirements-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .requirement i {
+            width: 16px;
+            font-size: 0.8rem;
+        }
+
+        .requirement.valid i {
+            color: var(--success-color) !important;
+        }
+
+        .requirement.valid i:before {
+            content: "\f00c"; /* fa-check */
+        }
+
+        .requirement span {
+            color: var(--text-secondary);
+        }
+
+        .requirement.valid span {
+            color: var(--success-color);
+        }
+    </style>
 @endsection
 
 @push('scripts')
@@ -149,29 +207,35 @@
             });
         });
 
-        // Password strength meter
+        // Password strength meter and requirements checker
         const passwordInput = document.getElementById('password');
         const strengthMeter = document.querySelector('.strength-meter-fill');
         const strengthText = document.querySelector('.strength-text span');
+        const requirements = document.querySelectorAll('.requirement');
 
         passwordInput.addEventListener('input', function() {
             const password = this.value;
             let strength = 0;
 
-            // Length check
-            if (password.length >= 8) strength += 1;
+            // Check requirements
+            const checks = {
+                length: password.length >= 8,
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[^A-Za-z0-9]/.test(password)
+            };
 
-            // Contains lowercase
-            if (/[a-z]/.test(password)) strength += 1;
-
-            // Contains uppercase
-            if (/[A-Z]/.test(password)) strength += 1;
-
-            // Contains number
-            if (/[0-9]/.test(password)) strength += 1;
-
-            // Contains special character
-            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            // Update requirement indicators
+            requirements.forEach(req => {
+                const requirement = req.getAttribute('data-requirement');
+                if (checks[requirement]) {
+                    req.classList.add('valid');
+                    strength += 1;
+                } else {
+                    req.classList.remove('valid');
+                }
+            });
 
             // Update strength meter
             strengthMeter.setAttribute('data-strength', strength);
@@ -179,6 +243,24 @@
             // Update text
             const strengthLabels = ['Too weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very strong'];
             strengthText.textContent = strengthLabels[strength];
+        });
+
+        // Form submission with loading state
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Resetting Password...';
+            button.disabled = true;
+
+            // Re-enable after 5 seconds (in case of slow response)
+            setTimeout(() => {
+                if (button.disabled) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+            }, 5000);
         });
     </script>
 @endpush
