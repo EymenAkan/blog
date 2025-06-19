@@ -13,8 +13,9 @@ class PostController extends Controller
 {
     public function index()
     {
+        $postshow = Post::paginate(10);
         $posts = Post::orderBy('created_at', 'desc')->get();
-        return view('frontend.posts.index', compact('posts'));
+        return view('frontend.posts.index', compact('posts', 'postshow'));
     }
 
     public function filterByTag(Tag $tag)

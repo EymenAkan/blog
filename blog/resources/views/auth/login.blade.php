@@ -38,9 +38,9 @@
                     <div class="form-group mb-3">
                         <label for="email" class="form-label">Email Address</label>
                         <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="fas fa-envelope"></i>
-                        </span>
+                            <span class="input-group-text">
+                                <i class="fas fa-envelope"></i>
+                            </span>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                    id="email" name="email" value="{{ old('email') }}"
                                    placeholder="your.email@example.com" required autofocus>
@@ -54,9 +54,9 @@
 
                     <div class="form-group mb-3">
                         <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="fas fa-lock"></i>
-                        </span>
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
                                    id="password" name="password" placeholder="••••••••" required>
                             <button type="button" class="btn btn-outline-secondary toggle-password" tabindex="-1">
@@ -90,6 +90,10 @@
             </div>
 
             <div class="auth-footer">
+                <p class="text-center mb-2">
+                    Forgot your password?
+                    <a href="{{ route('password.request') }}" class="auth-link">Reset Password</a>
+                </p>
                 <p class="text-center mb-0">
                     Don't have an account?
                     <a href="{{ route('register') }}" class="auth-link">Create Account</a>
@@ -163,17 +167,11 @@
 
         // Handle social login
         function handleSocialLogin(button, provider) {
-            // Add loading state
             button.classList.add('loading');
-
-            // Store the original content
             const originalContent = button.innerHTML;
-
-            // Update button text
             const span = button.querySelector('span');
             span.textContent = `Connecting to ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`;
 
-            // Optional: Add analytics tracking
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'social_login_attempt', {
                     'provider': provider,
@@ -181,40 +179,31 @@
                 });
             }
 
-            // Handle errors (you can customize this)
             setTimeout(() => {
-                // This would normally be handled by your OAuth flow
-                // Remove loading state if there's an error
                 if (button.classList.contains('loading')) {
                     button.classList.remove('loading');
                     button.innerHTML = originalContent;
                 }
-            }, 10000); // 10 second timeout
+            }, 10000);
         }
 
         // Handle OAuth callback messages
         window.addEventListener('message', function (event) {
             if (event.data.type === 'oauth_success') {
-                // Handle successful OAuth
                 const buttons = document.querySelectorAll('.social-btn');
                 buttons.forEach(btn => {
                     btn.classList.remove('loading');
                     btn.classList.add('success');
                 });
-
-                // Redirect or refresh
                 setTimeout(() => {
                     window.location.href = event.data.redirect || '/dashboard';
                 }, 1000);
             } else if (event.data.type === 'oauth_error') {
-                // Handle OAuth error
                 const buttons = document.querySelectorAll('.social-btn');
                 buttons.forEach(btn => {
                     btn.classList.remove('loading');
                     btn.classList.add('error');
                 });
-
-                // Show error message
                 setTimeout(() => {
                     buttons.forEach(btn => btn.classList.remove('error'));
                 }, 3000);
