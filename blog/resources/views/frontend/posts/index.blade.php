@@ -197,13 +197,13 @@
                     <div class="col-6">
                         <div class="stats-card">
                             <div class="stats-number">{{ $posts->count() }}</div>
-                            <small style="color: var(--text-secondary);">Total Posts</small>
+                            <small style="color: var(--text-third);">Total Posts</small>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="stats-card">
                             <div class="stats-number">{{ $allTags->count() }}</div>
-                            <small style="color: var(--text-secondary);">Topics</small>
+                            <small style="color: var(--text-third);">Topics</small>
                         </div>
                     </div>
                 </div>
