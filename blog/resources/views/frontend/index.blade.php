@@ -103,7 +103,7 @@
                                 <div class="project-card-overlay">
                                     <a href="{{ route('post.show', $post) }}" class="btn btn-balanced btn-sm">
                                         <i class="fas fa-eye me-1"></i>
-                                        View Demo
+                                        View Post
                                     </a>
                                 </div>
                             </div>

@@ -188,15 +188,15 @@
                     Feel free to reach out if you want to chat about programming, projects, or just say hi!
                 </p>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="mailto:eymen.student@example.com" class="btn btn-outline-light">
+                    <a href="mailto:eymen.akan.job@hotmail.com" class="btn btn-outline-light">
                         <i class="fas fa-envelope me-2"></i>
                         Email Me
                     </a>
-                    <a href="#" class="btn btn-outline-light">
+                    <a href="https://github.com/EymenAkan" class="btn btn-outline-light">
                         <i class="fab fa-github me-2"></i>
                         GitHub
                     </a>
-                    <a href="#" class="btn btn-outline-light">
+                    <a href="https://www.linkedin.com/in/eymen-akan/" class="btn btn-outline-light">
                         <i class="fab fa-linkedin me-2"></i>
                         LinkedIn
                     </a>
@@ -279,7 +279,7 @@
                     </li>
                     <li class="mb-2" style="color: var(--text-secondary);">
                         <i class="fas fa-comments me-2" style="color: var(--accent-color);"></i>
-                        Real-time chat application
+                        Multi-User reminder app for roommates and people who are sharing responsibilty together
                     </li>
                 </ul>
             </div>

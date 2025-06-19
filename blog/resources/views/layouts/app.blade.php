@@ -293,59 +293,26 @@
 
         /* Enhanced Hero with Dynamic Colors */
         .hero-balanced {
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
+            padding: 2rem 0;
+            margin-bottom: 1.5rem;
             position: relative;
-            overflow: hidden;
-            box-shadow: var(--bloom-glow);
-        }
-
-        .hero-balanced::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .hero-balanced::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: heroGlow 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes heroGlow {
-            0% { transform: rotate(0deg) scale(1); opacity: 0.1; }
-            100% { transform: rotate(180deg) scale(1.1); opacity: 0.2; }
         }
 
         .hero-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 600;
             margin-bottom: 1rem;
             line-height: 1.2;
-            position: relative;
-            z-index: 1;
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
             margin-bottom: 1.5rem;
             font-weight: 400;
-            position: relative;
-            z-index: 1;
         }
 
         /* Bloomy Cards */
