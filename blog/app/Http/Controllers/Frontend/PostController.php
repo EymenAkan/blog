@@ -37,7 +37,7 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required',
-            'description' => 'required',
+            'content' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'tags' => 'array',
             'tags.*' => 'exists:tags,id',
@@ -49,7 +49,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $validated['title'];
         $post->slug = Str::slug($validated['title']);
-        $post->description = $validated['description'];
+        $post->content = $validated['content'];
         $post->image = $file_name;
         $post->save();
         if (isset($validated['tags'])) {
@@ -79,14 +79,14 @@ class PostController extends Controller
 
         $validated = $request->validate([
             'title' => 'required',
-            'description' => 'required',
+            'content' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'tags' => 'array',
             'tags.*' => 'exists:tags,id',
         ]);
 
         $post->title = $validated['title'];
-        $post->description = $validated['description'];
+        $post->content = $validated['content'];
 
         if ($request->hasFile('image')) {
             $file_name = time() . '.' . $request->image->getClientOriginalExtension();

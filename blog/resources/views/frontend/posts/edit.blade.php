@@ -16,8 +16,8 @@
 
             <div>
                 <label class="block text-gray-700 font-semibold mb-1">Body</label>
-                <textarea name="description" rows="6"
-                          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('description', $post->description) }}</textarea>
+                <textarea name="content" rows="6"
+                          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('content', $post->content) }}</textarea>
             </div>
 
             <div>

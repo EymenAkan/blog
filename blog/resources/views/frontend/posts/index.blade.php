@@ -86,7 +86,7 @@
                                     </h4>
 
                                     <p class="mb-3" style="color: var(--text-secondary); line-height: 1.6;">
-                                        {{ Str::limit($post->description, 150) }}
+                                        {{ Str::limit($post->content, 150) }}
                                     </p>
 
                                     <div class="d-flex justify-content-between align-items-center">

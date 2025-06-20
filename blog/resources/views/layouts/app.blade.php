@@ -772,13 +772,13 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                         <i class="fas fa-user-circle me-2"></i>
                                         Profile
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('settings') }}">
+                                    <a class="dropdown-item" href="#">
                                         <i class="fas fa-cog me-2"></i>
                                         Settings
                                     </a>

@@ -19,7 +19,7 @@
             </p>
             <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
                 <a href="{{ route('posts.index') }}" class="btn btn-balanced btn-lg">
-                    <i class="fas fa-code me-2"></i>
+                    <i class="fas fa-cogde me-2"></i>
                     View Project
                 </a>
                 <a href="#what-i-learned" class="btn btn-outline-light btn-lg">
@@ -121,7 +121,7 @@
                                     </a>
                                 </h5>
                                 <p class="project-card-excerpt">
-                                    {{ Str::limit($post->description, 100) }}
+                                    {{ Str::limit($post->content, 100) }}
                                 </p>
                                 <div class="project-card-meta">
                                     <small>

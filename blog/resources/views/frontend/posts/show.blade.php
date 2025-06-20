@@ -112,7 +112,7 @@
                 <!-- Post Content -->
                 <div class="post-content mb-4">
                     <div style="color: var(--text-primary); font-size: 1.1rem; line-height: 1.8;">
-                        {!! nl2br(e($post->description)) !!}
+                        {!! nl2br(e($post->content)) !!}
                     </div>
                 </div>
 
@@ -241,7 +241,7 @@
                     </div>
                     <div class="col-6">
                         <div class="stats-card">
-                            <div class="stats-number">{{ str_word_count(strip_tags($post->description)) }}</div>
+                            <div class="stats-number">{{ str_word_count(strip_tags($post->content)) }}</div>
                             <small style="color: var(--text-secondary);">Words</small>
                         </div>
                     </div>
@@ -260,7 +260,7 @@
                         @endif
                         <div class="d-flex justify-content-between">
                             <span>Reading Time:</span>
-                            <span>~{{ ceil(str_word_count(strip_tags($post->description)) / 200) }} min</span>
+                            <span>~{{ ceil(str_word_count(strip_tags($post->content)) / 200) }} min</span>
                         </div>
                     </div>
                 </div>

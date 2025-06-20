@@ -22,9 +22,9 @@
                     <label for="floatingInput">Title</label>
                     <input class="form-control" type="text" name="title" value="{{ old('title') }}">
 
-                    <label for="floatingTextArea">Description</label>
-                    <textarea class="form-control" name="description" id="floatingTextarea" cols="30"
-                              rows="10">{{old('description')}}</textarea>
+                    <label for="floatingTextArea">content</label>
+                    <textarea class="form-control" name="content" id="floatingTextarea" cols="30"
+                              rows="10">{{old('content')}}</textarea>
 
                     <label for="formFile" class="form-label">Add Image</label>
                     <input class="form-control" type="file" name="image">

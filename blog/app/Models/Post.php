@@ -11,13 +11,18 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
-        'description',
+        'content',
         'image',
     ];
 
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'post_tag');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     protected static function boot()

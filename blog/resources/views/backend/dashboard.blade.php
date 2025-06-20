@@ -1,57 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('backend.layouts.master')
 
-@include('backend.layouts.header')
+@section('title', 'Dashboard')
 
-<body>
-<!-- Begin page -->
-<div class="wrapper">
+@section('content')
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <form class="d-flex">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control shadow border-0" id="dash-daterange"
+                                               placeholder="Select date range">
+                                        <span class="input-group-text bg-primary border-primary text-white">
+                                            <i class="ri-calendar-todo-fill fs-13"></i>
+                                        </span>
+                                    </div>
+                                    <a href="javascript: void(0);" class="btn btn-primary ms-2">
+                                        <i class="ri-refresh-line"></i>
+                                    </a>
+                                </form>
+                            </div>
+                            <h4 class="page-title">My Posts</h4>
+                        </div>
+                    </div>
+                </div>
 
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-    <!-- ========== Topbar Start ========== -->
-    @include('backend.layouts.topbar')
-    <!-- ========== Topbar End ========== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="header-title">Your Posts</h4>
+                                <a href="{{ route('user.posts.create') }}" class="btn btn-primary btn-balanced">
+                                    <i class="ri-add-line me-1"></i> Add New Post
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                @if($posts->isEmpty())
+                                    <p class="text-muted">You haven't created any posts yet.</p>
+                                    <a href="{{ route('user.posts.create') }}" class="btn btn-primary btn-sm">Create
+                                        Your First Post</a>
+                                @else
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-borderless table-hover table-nowrap table-centered m-0">
+                                            <thead class="border-top border-bottom bg-light-subtle border-light">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Content (Preview)</th>
+                                                <th>Created At</th>
+                                                @if(auth()->user()->hasRole('admin'))
+                                                    <th>Author</th>
+                                                @endif
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($posts as $post)
+                                                <tr>
+                                                    <td>{{ $post->title }}</td>
+                                                    <td>{{ \Illuminate\Support\Str::limit($post->content, 50) }}</td>
+                                                    <td>{{ $post->created_at->format('d/m/Y H:i') }}</td>
+                                                    @if(auth()->user()->hasRole('admin'))
+                                                        <td>{{ $post->user->name ?? 'Unknown' }}</td>
+                                                    @endif
+                                                    <td>
+                                                        <a href="{{ route('posts.show', $post->slug) }}"
+                                                           class="btn btn-sm btn-primary"><i
+                                                                class="ri-eye-line"></i></a>
+                                                        <a href="{{ route('user.posts.edit', $post->slug) }}"
+                                                           class="btn btn-sm btn-warning"><i
+                                                                class="ri-edit-line"></i></a>
+                                                        <form action="{{ route('user.posts.destroy', $post->slug) }}"
+                                                              method="POST" style="display: inline;"
+                                                              onsubmit="return confirm('Are you sure?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger"><i
+                                                                    class="ri-delete-bin-line"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                        {{ $posts->links() }}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- ========== Left Sidebar Start ========== -->
-    @include('backend.layouts.leftsidebar')
-    <!-- ========== Left Sidebar End ========== -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script>
+                        © Attex - Coderthemes.com
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-md-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+@endsection
 
-    <!-- ============================================================== -->
-    <!-- Start Page Content here -->
-    <!-- ============================================================== -->
-
-    @include('backend.layouts.content')
-
-    <!-- ============================================================== -->
-    <!-- End Page content -->
-    <!-- ============================================================== -->
-
-</div>
-<!-- END wrapper -->
-
-<!-- Theme Settings -->
-@include('backend.layouts.footer')
-
-<!-- Vendor js -->
-<script src="{{url('backend/assets/js/vendor.min.js')}}"></script>
-
-<!-- Daterangepicker js -->
-<script src="{{url('backend/assets/vendor/daterangepicker/moment.min.js')}}"></script>
-<script src="{{url('backend/assets/vendor/daterangepicker/daterangepicker.js')}}"></script>
-
-<!-- Apex Charts js -->
-<script src="{{url('backend/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
-
-<!-- Vector Map js -->
-<script src="{{url('backend/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
-<script src="{{url('backend/assets/vendor/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js')}}"></script>
-
-<!-- Dashboard App js -->
-<script src="{{url('backend/assets/js/pages/demo.dashboard.js')}}"></script>
-
-<!-- App js -->
-<script src="{{url('backend/assets/js/app.min.js')}}"></script>
-
-</body>
-
-</html>
+@push('scripts')
+    <script src="{{ asset('backend/assets/js/vendor/dataTables.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                responsive: true,
+                pageLength: 10,
+                order: [[2, 'desc']],
+            });
+        });
+    </script>
+@endpush
