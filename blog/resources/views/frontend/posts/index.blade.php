@@ -36,10 +36,6 @@
             <p class="hero-subtitle">Personal thoughts, experiences, and discoveries</p>
         @endif
 
-        <a href="{{ route('posts.create') }}" class="btn btn-balanced btn-lg">
-            <i class="fas fa-pen me-2"></i>
-            Write New Post
-        </a>
     </div>
 @endsection
 
@@ -119,10 +115,6 @@
                         <i class="fas fa-pen-fancy fa-3x mb-3" style="color: var(--text-muted);"></i>
                         <h3>No Posts Yet</h3>
                         <p style="color: var(--text-secondary);">Start sharing your thoughts and experiences!</p>
-                        <a href="{{ route('posts.create') }}" class="btn btn-balanced">
-                            <i class="fas fa-plus me-2"></i>
-                            Write First Post
-                        </a>
                     @endif
                 </div>
             @endif

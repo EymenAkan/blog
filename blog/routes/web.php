@@ -19,7 +19,7 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 
 Route::prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/{slug}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('/{slug}', [PostController::class, 'show'])->name('post.show');
 });
 
 Route::get('tags/', [TagController::class, 'index'])->name('tags.index');
@@ -51,31 +51,7 @@ Route::middleware('guest')->group(function () {
 // Oturum açmış kullanıcı rotaları
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/posts', [DashboardController::class, 'postsIndex'])->name('backend.posts.index');
-    Route::get('/tags', [DashboardController::class, 'tagsIndex'])->name('backend.tags.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
-
-    // Kullanıcı post rotaları
-    Route::prefix('posts')->group(function () {
-        Route::get('/create', [PostController::class, 'create'])->name('user.posts.create');
-        Route::post('/', [PostController::class, 'store'])->name('user.posts.store');
-        Route::get('/{slug}/edit', [PostController::class, 'edit'])->name('user.posts.edit');
-        Route::put('/{slug}', [PostController::class, 'update'])->name('user.posts.update');
-        Route::delete('/{slug}', [PostController::class, 'destroy'])->name('user.posts.destroy');
-    });
-
-    // Admin rotaları
-    Route::prefix('admin')->middleware('role:admin')->group(function () {
-        Route::prefix('posts')->group(function () {
-            Route::get('/', [AdminPostController::class, 'index'])->name('admin.posts.index');
-            Route::get('/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
-            Route::post('/', [AdminPostController::class, 'store'])->name('admin.posts.store');
-            Route::get('/{post}', [AdminPostController::class, 'show'])->name('admin.posts.show');
-            Route::get('/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
-            Route::put('/{post}', [AdminPostController::class, 'update'])->name('admin.posts.update');
-            Route::delete('/{post}', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
-        });
-    });
 });

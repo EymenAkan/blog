@@ -11,29 +11,19 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $posts = Post::where('user_id', Auth::id())->with('tags', 'user')->latest()->paginate(10);
+        return view('backend.dashboard', compact('posts'));
+    }
 
-        $recentPosts = Post::where('user_id', $user->id)
-            ->with('tags')
-            ->latest()
-            ->take(5)
-            ->get();
+    public function postsIndex()
+    {
+        $posts = Post::where('user_id', Auth::id())->with('tags', 'user')->latest()->paginate(10);
+        return view('backend.posts.index', compact('posts'));
+    }
 
-        $userTags = Tag::whereHas('posts', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })
-            ->withCount('posts')
-            ->orderBy('posts_count', 'desc')
-            ->take(5)
-            ->get();
-
-        $stats = [
-            'total_posts' => Post::where('user_id', $user->id)->count(),
-            'total_tags' => $userTags->count(),
-            'total_words' => Post::where('user_id', $user->id)
-                ->sum(\DB::raw("CHAR_LENGTH(description) - CHAR_LENGTH(REPLACE(description, ' ', '')) + 1")),
-        ];
-
-        return view('backend.dashboard', compact('user', 'recentPosts', 'userTags', 'stats'));
+    public function tagsIndex()
+    {
+        $tags = Tag::all();
+        return view('backend.tags.index', compact('tags'));
     }
 }

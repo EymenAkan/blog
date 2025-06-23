@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="mb-0">All Tags</h1>
+            <h1 class="mb-0">Manage Tags</h1>
+            <a class="btn btn-primary" href="{{ route('tags.create') }}" role="button">
+                <i class="fas fa-plus me-2"></i>
+                Add New Tag
+            </a>
         </div>
 
         @if ($message = Session::get('success'))
@@ -32,6 +36,22 @@
                                 </div>
 
                                 <div class="tag-actions d-flex gap-2">
+                                    <a href="{{ route('tags.edit', $tag->id) }}"
+                                       class="btn btn-sm btn-outline-primary flex-fill">
+                                        <i class="fas fa-edit me-1"></i>
+                                        Edit
+                                    </a>
+                                    <form action="{{ route('tags.destroy', $tag->id) }}"
+                                          method="POST"
+                                          class="flex-fill"
+                                          onsubmit="return confirm('Are you sure you want to delete this tag?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                                            <i class="fas fa-trash me-1"></i>
+                                            Delete
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -42,6 +62,11 @@
             <div class="text-center py-5">
                 <i class="fas fa-tags fa-3x text-muted mb-3"></i>
                 <h3>No Tags Yet</h3>
+                <p class="text-muted mb-4">Create your first tag to start organizing your posts!</p>
+                <a href="{{ route('tags.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>
+                    Create First Tag
+                </a>
             </div>
         @endif
     </div>
