@@ -19,8 +19,24 @@ class RoleSeeder extends Seeder
         ]);
 
         DB::table('roles')->insert([
-            'name' => 'user',
-            'description' => 'Basic user',
+            'name' => 'editor',
+            'description' => 'editor and publisher',
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'author',
+            'description' => 'only publisher',
+        ]);
+
+
+        DB::table('roles')->insert([
+            'name' => 'contributor',
+            'description' => 'can write post need aproval before publish',
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'subscriber',
+            'description' => 'read & comment',
         ]);
     }
 }

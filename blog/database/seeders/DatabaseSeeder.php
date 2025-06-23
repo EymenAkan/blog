@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([user_roleSeeder::class]);
         $this->call([PostSeeder::class]);
         $this->call([TagSeeder::class]);
+        $this->call([CategorySeeder::class]);
         $this->call([post_tagSeeder::class]);
+        $this->call([post_categorySeeder::class]);
     }
 }
