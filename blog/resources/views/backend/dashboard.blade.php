@@ -40,14 +40,14 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h4 class="header-title">Your Posts</h4>
-                                <a href="{{ route('user.posts.create') }}" class="btn btn-primary btn-balanced">
+                                <a href="{{ route('posts.create') }}" class="btn btn-primary btn-balanced">
                                     <i class="ri-add-line me-1"></i> Add New Post
                                 </a>
                             </div>
                             <div class="card-body">
                                 @if($posts->isEmpty())
                                     <p class="text-muted">You haven't created any posts yet.</p>
-                                    <a href="{{ route('user.posts.create') }}" class="btn btn-primary btn-sm">Create
+                                    <a href="{{ route('posts.create') }}" class="btn btn-primary btn-sm">Create
                                         Your First Post</a>
                                 @else
                                     <div class="table-responsive">
@@ -74,13 +74,13 @@
                                                         <td>{{ $post->user->name ?? 'Unknown' }}</td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ route('posts.show', $post->slug) }}"
+                                                        <a href="{{ route('post.show', $post->slug) }}"
                                                            class="btn btn-sm btn-primary"><i
                                                                 class="ri-eye-line"></i></a>
-                                                        <a href="{{ route('user.posts.edit', $post->slug) }}"
+                                                        <a href="{{ route('posts.edit', $post->slug) }}"
                                                            class="btn btn-sm btn-warning"><i
                                                                 class="ri-edit-line"></i></a>
-                                                        <form action="{{ route('user.posts.destroy', $post->slug) }}"
+                                                        <form action="{{ route('posts.destroy', $post->slug) }}"
                                                               method="POST" style="display: inline;"
                                                               onsubmit="return confirm('Are you sure?');">
                                                             @csrf

@@ -1,40 +1,38 @@
 <?php
 
-use App\Http\Controllers\Backend\Admin\AdminPostController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\Profile\ProfileController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\PostController as FrontPostController;
+use App\Http\Controllers\Frontend\TagController as FrontTagController;
+
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Auth\PasswordResetController;
-use App\Http\Controllers\Frontend\PageController;
-use App\Http\Controllers\Frontend\PostController;
-use App\Http\Controllers\Frontend\TagController;
-use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Admin\UserController;
+use App\Http\Controllers\Backend\Profile\ProfileController;
+use App\Http\Controllers\Backend\Post\PostController as BackPostController;
+use App\Http\Controllers\Backend\Tag\TagController as BackTagController;
+use App\Http\Controllers\Backend\Category\CategoryController as BackCategoryController;
+
 
 // Herkese açık rotalar
-Route::get('/', [PageController::class, 'index'])->name('index');
-Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::middleware('guest')->group(function () {
+    Route::get('/', [PageController::class, 'index'])->name('index');
+    Route::get('/about', [PageController::class, 'about'])->name('about');
 
-Route::prefix('posts')->group(function () {
-    Route::get('/', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/{slug}', [PostController::class, 'show'])->name('post.show');
-});
+    Route::prefix('blog')->group(function () {
+        Route::get('/', [FrontPostController::class, 'index'])->name('posts.index');
+        Route::get('/{slug}', [FrontPostController::class, 'show'])->name('post.show');
+    });
 
-Route::get('tags/', [TagController::class, 'index'])->name('tags.index');
-
-Route::prefix('tags')->middleware('role:admin')->group(function () {
-    Route::get('/create', [TagController::class, 'create'])->name('tags.create');
-    Route::post('/', [TagController::class, 'store'])->name('tags.store');
-    Route::get('/{tag}/edit', [TagController::class, 'edit'])->name('tags.edit');
-    Route::put('/{tag}', [TagController::class, 'update'])->name('tags.update');
-    Route::delete('/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
-});
-Route::get('/posts/tag/{tag:slug}', [PostController::class, 'filterByTag'])->name('posts.filterByTag');
+    Route::get('tags/', [FrontTagController::class, 'index'])->name('tags.index');
+    Route::get('/posts/tag/{tag:slug}', [FrontPostController::class, 'filterByTag'])->name('posts.filterByTag');
 
 // Misafir rotaları
-Route::middleware('guest')->group(function () {
     Route::get('/password/reset', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
@@ -48,10 +46,49 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('socialite.callback');
 });
 
-// Oturum açmış kullanıcı rotaları
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+    Route::prefix('posts')->group(function () {
+        Route::get('/', [BackPostController::class, 'index'])->name('posts.index');
+        Route::get('/create', [BackPostController::class, 'create'])->name('posts.create');
+        Route::post('/', [BackPostController::class, 'store'])->name('posts.store');
+        Route::get('/{post}/edit', [BackPostController::class, 'edit'])->name('posts.edit');
+        Route::put('/{post}', [BackPostController::class, 'update'])->name('posts.update');
+        Route::delete('/{post}', [BackPostController::class, 'destroy'])->name('posts.destroy');
+    });
+
+
+    Route::prefix('tags')->middleware('role:author,editor,admin')->group(function () {
+        Route::get('/backend', [BackTagController::class, 'index'])->name('tags.index');
+        Route::get('/create', [BackTagController::class, 'create'])->name('tags.create');
+        Route::post('/', [BackTagController::class, 'store'])->name('tags.store');
+        Route::get('/{tag}/edit', [BackTagController::class, 'edit'])->name('tags.edit');
+        Route::put('/{tag}', [BackTagController::class, 'update'])->name('tags.update');
+        Route::delete('/{tag}', [BackTagController::class, 'destroy'])->name('tags.destroy');
+    });
+
+    Route::prefix('categories')->middleware('role:editor,admin')->group(function () {
+        Route::get('/', [BackCategoryController::class, 'index'])->name('backend.categories.index');
+        Route::get('/create', [BackCategoryController::class, 'create'])->name('backend.categories.create');
+        Route::post('/', [BackCategoryController::class, 'store'])->name('backend.categories.store');
+        Route::get('/{category}/edit', [BackCategoryController::class, 'edit'])->name('backend.categories.edit');
+        Route::put('/{category}', [BackCategoryController::class, 'update'])->name('backend.categories.update');
+        Route::delete('/{category}', [BackCategoryController::class, 'destroy'])->name('backend.categories.destroy');
+    });
+
+    Route::prefix('user')->middleware('role:admin')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::get('/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/', [UserController::class, 'store'])->name('users.store');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
 });
+
+
+

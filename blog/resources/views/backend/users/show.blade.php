@@ -1,20 +1,21 @@
-@extends('frontend.layouts.master')
+@extends('backend.layouts.master')
 
-@section('title', $post->title)
+@section('title', 'User Detail')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h1>{{ $post->title }}</h1>
-                <p class="text-muted">By {{ $post->user->name ?? 'Unknown' }} | {{ $post->created_at->format('d/m/Y H:i') }}</p>
-                <div class="mb-3">
-                    @foreach($post->tags as $tag)
-                        <span class="badge bg-primary">{{ $tag->name }}</span>
-                    @endforeach
+                <h1>User Details</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <p><strong>Name:</strong> {{ $user->name }}</p>
+                        <p><strong>Email:</strong> {{ $user->email }}</p>
+                        <p><strong>Role:</strong> {{ ucfirst($user->role) }}</p>
+                        <p><strong>Created At:</strong> {{ $user->created_at->format('d/m/Y H:i') }}</p>
+                        <a href="{{ route('users.index') }}" class="btn btn-secondary mt-3">Back to User List</a>
+                    </div>
                 </div>
-                <div>{!! nl2br(e($post->content)) !!}</div>
-                <a href="{{ route('posts.index') }}" class="btn btn-primary mt-3">Back to Posts</a>
             </div>
         </div>
     </div>

@@ -1,23 +1,23 @@
 <div class="leftside-menu">
 
     <!-- Brand Logo Light -->
-    <a href="{{route('index')}}" class="logo logo-light">
-                    <span class="logo-lg">
-                        <img src="{{url('backend/assets/images/logo.png')}}" alt="logo">
-                    </span>
+    <a href="{{ route('index') }}" class="logo logo-light">
+        <span class="logo-lg">
+            <img src="{{ url('backend/assets/images/logo.png') }}" alt="logo">
+        </span>
         <span class="logo-sm">
-                        <img src="{{url('backend/assets/images/logo-sm.png')}}" alt="small logo">
-                    </span>
+            <img src="{{ url('backend/assets/images/logo-sm.png') }}" alt="small logo">
+        </span>
     </a>
 
     <!-- Brand Logo Dark -->
-    <a href="{{route('index')}}" class="logo logo-dark">
-                    <span class="logo-lg">
-                        <img src="{{url('backend/assets/images/logo-dark.png')}}" alt="dark logo">
-                    </span>
+    <a href="{{ route('index') }}" class="logo logo-dark">
+        <span class="logo-lg">
+            <img src="{{ url('backend/assets/images/logo-dark.png') }}" alt="dark logo">
+        </span>
         <span class="logo-sm">
-                        <img src="{{url('backend/assets/images/logo-sm.png')}}" alt="small logo">
-                    </span>
+            <img src="{{ url('backend/assets/images/logo-sm.png') }}" alt="small logo">
+        </span>
     </a>
 
     <!-- Sidebar Hover Menu Toggle Button -->
@@ -35,9 +35,9 @@
         <!-- Leftbar User -->
         <div class="leftbar-user">
             <a href="pages-profile.html">
-                <img src="{{url('backend/assets/images/users/avatar-1.jpg')}}" alt="user-image" height="42"
+                <img src="{{ url('backend/assets/images/users/avatar-1.jpg') }}" alt="user-image" height="42"
                      class="rounded-circle shadow-sm">
-                <span class="leftbar-user-name mt-2">Tosha Minner</span>
+                <span class="leftbar-user-name mt-2">{{ auth()->user()->name ?? 'Guest' }}</span>
             </a>
         </div>
 
@@ -47,124 +47,45 @@
             <li class="side-nav-title">Navigation</li>
 
             <li class="side-nav-item">
-                <a href="{{route('dashboard')}}" aria-expanded="false"
-                   aria-controls="sidebarDashboards" class="side-nav-link">
+                <a href="{{ route('dashboard') }}" aria-expanded="false" class="side-nav-link">
                     <i class="ri-home-4-line"></i>
-                    <span class="badge bg-success float-end">2</span>
-                    <span> Dashboards </span>
+                    <span> Anasayfa </span>
                 </a>
             </li>
 
-            <li class="side-nav-title">Apps</li>
-
+            <li class="side-nav-title">Management</li>
 
             <li class="side-nav-item">
-                <a href="{{route('backend.posts.index')}}" aria-expanded="false" aria-controls="sidebarForms"
-                   class="side-nav-link">
-                    <i class="ri-survey-line"></i>
-                    <span> Forms </span>
+                <a href="{{ route('posts.index') }}" aria-expanded="false" class="side-nav-link">
+                    <i class="ri-file-list-3-line"></i>
+                    <span> Postlar </span>
                 </a>
             </li>
+
+            @if(auth()->user() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('editor')))
+                <li class="side-nav-item">
+                    <a href="{{ route('tags.index') }}" aria-expanded="false" class="side-nav-link">
+                        <i class="ri-price-tag-3-line"></i>
+                        <span> Etiketler </span>
+                    </a>
+                </li>
+            @endif
 
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false" aria-controls="sidebarTables"
-                   class="side-nav-link">
-                    <i class="ri-table-line"></i>
-                    <span> Tables </span>
-                    <span class="menu-arrow"></span>
+                <a href="{{ route('backend.categories.index') }}" aria-expanded="false" class="side-nav-link">
+                    <i class="ri-folder-4-line"></i>
+                    <span> Kategoriler </span>
                 </a>
-                <div class="collapse" id="sidebarTables">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="tables-basic.html">Basic Tables</a>
-                        </li>
-                        <li>
-                            <a href="tables-datatable.html">Data Tables</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
 
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarMaps" aria-expanded="false" aria-controls="sidebarMaps"
-                   class="side-nav-link">
-                    <i class="ri-treasure-map-line"></i>
-                    <span> Maps </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarMaps">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="maps-google.html">Google Maps</a>
-                        </li>
-                        <li>
-                            <a href="maps-vector.html">Vector Maps</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false"
-                   aria-controls="sidebarMultiLevel" class="side-nav-link">
-                    <i class="ri-share-line"></i>
-                    <span> Multi Level </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarMultiLevel">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
-                               aria-controls="sidebarSecondLevel">
-                                <span> Second Level </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarSecondLevel">
-                                <ul class="side-nav-third-level">
-                                    <li>
-                                        <a href="javascript: void(0);">Item 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript: void(0);">Item 2</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false"
-                               aria-controls="sidebarThirdLevel">
-                                <span> Third Level </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarThirdLevel">
-                                <ul class="side-nav-third-level">
-                                    <li>
-                                        <a href="javascript: void(0);">Item 1</a>
-                                    </li>
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false"
-                                           aria-controls="sidebarFourthLevel">
-                                            <span> Item 2 </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarFourthLevel">
-                                            <ul class="side-nav-forth-level">
-                                                <li>
-                                                    <a href="javascript: void(0);">Item 2.1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript: void(0);">Item 2.2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
+            @if(auth()->user() && auth()->user()->hasRole('admin'))
+                <li class="side-nav-item">
+                    <a href="{{ route('users.index') }}" aria-expanded="false" class="side-nav-link">
+                        <i class="ri-user-3-line"></i>
+                        <span> Kullanıcı Yönetimi </span>
+                    </a>
+                </li>
+            @endif
 
         </ul>
         <!--- End Sidemenu -->

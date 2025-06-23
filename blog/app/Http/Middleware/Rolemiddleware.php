@@ -11,13 +11,17 @@ class Rolemiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle($request, Closure $next, ...$roles)
     {
-        if ($request->user()->role !== $role) {
-            abort(404, 'Page not found');
+        $user = auth()->user();
+
+        if (!$user || !$user->roles->pluck('name')->intersect($roles)->isNotEmpty()) {
+            abort(403);
         }
+
         return $next($request);
     }
+
 }

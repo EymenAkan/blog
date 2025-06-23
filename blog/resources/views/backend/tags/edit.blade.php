@@ -1,28 +1,55 @@
-@extends('layouts.app')
+@extends('backend.layouts.master')
+
+@section('title', 'Edit Tag')
 
 @section('content')
-    <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded shadow-md">
-        <h1 class="text-2xl font-bold mb-6 text-center">Edit Tag</h1>
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
 
-        <form action="{{ route('tags.update', $tag->id) }}" method="POST" class="space-y-4">
-            @csrf
-            @method('PUT')
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex justify-content-between align-items-center">
+                            <h4 class="page-title">Edit Tag: {{ $tag->name }}</h4>
+                            <a href="{{ route('tags.index') }}" class="btn btn-secondary">
+                                <i class="ri-arrow-go-back-line me-1"></i> Back to Tags
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-            <div>
-                <label class="block text-gray-700 font-semibold mb-1">Tag Name</label>
-                <input type="text" name="name" value="{{ old('name', $tag->name) }}"
-                       class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <form action="{{ route('tags.update', $tag->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tag Name</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                       value="{{ old('name', $tag->name) }}" required>
+                                @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="theme_color" class="form-label">Theme Color</label>
+                                <input type="color" class="form-control form-control-color" id="theme_color"
+                                       name="theme_color" value="{{ old('theme_color', $tag->theme_color) }}" required>
+                                @error('theme_color')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <button type="submit" class="btn btn-warning">
+                                <i class="ri-save-line me-1"></i> Update Tag
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
-
-            <div class="flex justify-between items-center">
-                <a href="{{ route('tags.index') }}"
-                   class="text-blue-600 hover:underline">← Back</a>
-
-                <button type="submit"
-                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                    Update
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 @endsection

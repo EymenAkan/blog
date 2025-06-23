@@ -25,6 +25,16 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function Categories()
+    {
+        return $this->belongsToMany(Category::class, 'post_category');
+
+    }
     protected static function boot()
     {
         parent::boot();

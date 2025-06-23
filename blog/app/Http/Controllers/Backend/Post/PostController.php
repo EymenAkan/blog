@@ -2,92 +2,117 @@
 
 namespace App\Http\Controllers\Backend\Post;
 
-use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-
     public function index()
     {
         $user = Auth::user();
-        $postshow = Post::paginate(10);
-        $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $roles = $user->roles()->pluck('name')->toArray();
 
-        $tagshow = Tag::paginate(10);
-        $tags = Tag::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
-        return view('backend.posts.index', compact('posts', 'postshow', 'tags', 'tagshow'));
+        if (in_array('admin', $roles) || in_array('editor', $roles)) {
+            $posts = Post::with('tags')->latest()->paginate(10);
+        } else {
+            $posts = Post::with('tags')->where('user_id', $user->id)->latest()->paginate(10);
+        }
+
+        return view('backend.posts.index', compact('posts'));
     }
 
     public function create()
     {
         $tags = Tag::all();
-        return view('backend.posts.create', compact('tags'));
+        $categories = Category::all();
+        return view('backend.posts.create', compact('tags', 'categories'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'tags' => 'array',
+            'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
         ]);
 
-        $file_name = time() . '.' . $request->image->getClientOriginalExtension();
-        $request->image->move(public_path('frontend/assets/img'), $file_name);
+        $fileName = time() . '.' . $request->image->getClientOriginalExtension();
+        $request->image->move(public_path('frontend/assets/img'), $fileName);
 
         $post = new Post();
         $post->title = $validated['title'];
         $post->slug = Str::slug($validated['title']);
         $post->content = $validated['content'];
-        $post->image = $file_name;
+        $post->image = $fileName;
+        $post->user_id = auth()->id();
         $post->save();
-        if (isset($validated['tags'])) {
-            $post->tags()->sync($validated['tags']);
+
+        $post->tags()->sync($validated['tags'] ?? []);
+        $post->categories()->sync($validated['categories']);
+
+        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+    }
+
+    public function edit(Post $post)
+    {
+        $user = auth()->user();
+        $tags = Tag::all();
+        $categories = Category::all();
+
+        return view('backend.posts.edit', compact('post', 'tags', 'categories'));
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $user = auth()->user();
+        if (!($user->hasRole('admin') || $user->hasRole('editor') || $user->id === $post->user_id)) {
+            abort(403);
         }
 
-
-        return redirect()->route('backend.posts.index')->with('success', 'Post Created');
-    }
-
-    public function edit($slug)
-    {
-        $post = Post::where('slug', $slug)->firstOrFail();
-        $tags = Tag::all();
-        return view('backend.posts.edit', compact('post', 'tags'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $post = Post::findOrFail($id);
-
         $validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'tags' => 'array',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
         ]);
 
         $post->title = $validated['title'];
+        $post->slug = Str::slug($validated['title']);
         $post->content = $validated['content'];
 
         if ($request->hasFile('image')) {
-            $file_name = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('frontend/assets/img'), $file_name);
-            $post->image = $file_name;
+            $fileName = time() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('frontend/assets/img'), $fileName);
+            $post->image = $fileName;
         }
 
-        $post->tags()->sync($validated['tags'] ?? []);
         $post->save();
+        $post->tags()->sync($validated['tags'] ?? []);
+        $post->categories()->sync($validated['categories']);
 
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+    }
 
-        return redirect()->route('backend.posts.index')->with('success', 'Post Updated');
+    public function destroy(Post $post)
+    {
+        $user = auth()->user();
+        if (!($user->hasRole('admin') || $user->id === $post->user_id)) {
+            abort(403);
+        }
+
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
     }
 }
