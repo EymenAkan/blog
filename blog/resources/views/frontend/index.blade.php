@@ -101,7 +101,7 @@
                                      alt="{{ $post->title }}"
                                      class="img-fluid">
                                 <div class="project-card-overlay">
-                                    <a href="{{ route('post.show', $post) }}" class="btn btn-balanced btn-sm">
+                                    <a href="{{ route('blog.show', $post) }}" class="btn btn-balanced btn-sm">
                                         <i class="fas fa-eye me-1"></i>
                                         View Post
                                     </a>
@@ -116,7 +116,7 @@
                                     @endforeach
                                 </div>
                                 <h5 class="project-card-title">
-                                    <a href="{{ route('post.show', $post) }}" class="text-decoration-none">
+                                    <a href="{{ route('blog.show', $post) }}" class="text-decoration-none">
                                         {{ Str::limit($post->title, 60) }}
                                     </a>
                                 </h5>

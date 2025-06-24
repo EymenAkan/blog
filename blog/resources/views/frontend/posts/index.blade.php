@@ -74,7 +74,7 @@
                                     </div>
 
                                     <h4 class="mb-2" style="font-family: 'Playfair Display', serif; color: var(--text-primary);">
-                                        <a href="{{route('post.show', $post->slug)}}"
+                                        <a href="{{route('blog.show', $post->slug)}}"
                                            class="text-decoration-none"
                                            style="color: inherit;">
                                             {{ $post->title }}
@@ -86,7 +86,7 @@
                                     </p>
 
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <a href="{{route('post.show', $post->slug)}}"
+                                        <a href="{{route('blog.show', $post->slug)}}"
                                            class="btn btn-balanced-outline btn-sm">
                                             <i class="fas fa-arrow-right me-1"></i>
                                             Read More

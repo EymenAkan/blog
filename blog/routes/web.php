@@ -25,11 +25,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/about', [PageController::class, 'about'])->name('about');
 
     Route::prefix('blog')->group(function () {
-        Route::get('/', [FrontPostController::class, 'index'])->name('posts.index');
-        Route::get('/{slug}', [FrontPostController::class, 'show'])->name('post.show');
+        Route::get('/', [FrontPostController::class, 'index'])->name('blog.index');
+        Route::get('/{slug}', [FrontPostController::class, 'show'])->name('blog.show');
     });
 
-    Route::get('tags/', [FrontTagController::class, 'index'])->name('tags.index');
+    Route::get('tags/', [FrontTagController::class, 'index'])->name('filter.index');
     Route::get('/posts/tag/{tag:slug}', [FrontPostController::class, 'filterByTag'])->name('posts.filterByTag');
 
 // Misafir rotaları

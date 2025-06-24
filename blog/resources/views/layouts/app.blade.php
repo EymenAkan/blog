@@ -737,9 +737,9 @@
                         <i class="fas fa-home me-1" aria-hidden="true"></i>
                         Home
                     </a>
-                    <a class="nav-link {{ request()->routeIs('posts.*') ? 'active' : '' }}"
-                       href="{{ route('posts.index') }}"
-                       aria-current="{{ request()->routeIs('posts.*') ? 'page' : 'false' }}">
+                    <a class="nav-link {{ request()->routeIs('blog.*') ? 'active' : '' }}"
+                       href="{{ route('blog.index') }}"
+                       aria-current="{{ request()->routeIs('blog.*') ? 'page' : 'false' }}">
                         <i class="fas fa-blog me-1" aria-hidden="true"></i>
                         Blog
                     </a>
@@ -749,9 +749,9 @@
                         <i class="fas fa-user me-1" aria-hidden="true"></i>
                         About
                     </a>
-                    <a class="nav-link {{ request()->routeIs('tags.*') ? 'active' : '' }}"
-                       href="{{ route('tags.index') }}"
-                       aria-current="{{ request()->routeIs('tags.*') ? 'page' : 'false' }}">
+                    <a class="nav-link {{ request()->routeIs('filter.*') ? 'active' : '' }}"
+                       href="{{ route('filter.index') }}"
+                       aria-current="{{ request()->routeIs('filter.*') ? 'page' : 'false' }}">
                         <i class="fas fa-tags me-1" aria-hidden="true"></i>
                         Tags
                     </a>
