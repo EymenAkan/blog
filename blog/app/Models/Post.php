@@ -35,6 +35,12 @@ class Post extends Model
         return $this->belongsToMany(Category::class, 'post_category');
 
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id')->latest();
+    }
+
     protected static function boot()
     {
         parent::boot();

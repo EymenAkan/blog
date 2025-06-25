@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Post;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Category;
@@ -115,4 +116,6 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
     }
+
+
 }

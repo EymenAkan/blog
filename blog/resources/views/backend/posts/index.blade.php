@@ -79,7 +79,7 @@
                                                         <td>{{ $post->user->name ?? 'Unknown' }}</td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ route('post.show', $post->slug) }}"
+                                                        <a href="{{ route('blog.show', $post->slug) }}"
                                                            class="btn btn-sm btn-primary"><i
                                                                 class="ri-eye-line"></i></a>
                                                         <a href="{{ route('posts.edit', $post->slug) }}"

@@ -14,13 +14,13 @@ use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Admin\UserController;
 use App\Http\Controllers\Backend\Profile\ProfileController;
-use App\Http\Controllers\Backend\Post\PostController as BackPostController;
+use App\Http\Controllers\Backend\Comment\CommentController;
 use App\Http\Controllers\Backend\Tag\TagController as BackTagController;
+use App\Http\Controllers\Backend\Post\PostController as BackPostController;
 use App\Http\Controllers\Backend\Category\CategoryController as BackCategoryController;
 
 
-// Herkese açık rotalar
-Route::middleware('guest')->group(function () {
+
     Route::get('/', [PageController::class, 'index'])->name('index');
     Route::get('/about', [PageController::class, 'about'])->name('about');
 
@@ -32,7 +32,6 @@ Route::middleware('guest')->group(function () {
     Route::get('tags/', [FrontTagController::class, 'index'])->name('filter.index');
     Route::get('/posts/tag/{tag:slug}', [FrontPostController::class, 'filterByTag'])->name('posts.filterByTag');
 
-// Misafir rotaları
     Route::get('/password/reset', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
@@ -44,7 +43,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login'])->name('login');
     Route::get('/auth/{provider}', [SocialiteController::class, 'redirect'])->name('socialite.redirect');
     Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('socialite.callback');
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -59,11 +57,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/{post}/edit', [BackPostController::class, 'edit'])->name('posts.edit');
         Route::put('/{post}', [BackPostController::class, 'update'])->name('posts.update');
         Route::delete('/{post}', [BackPostController::class, 'destroy'])->name('posts.destroy');
+        Route::post('/posts/{post}/comment', [FrontPostController::class, 'CommentStore'])->name('posts.comment.store');
     });
 
-
+    Route::get('tags/backend', [BackTagController::class, 'index'])->name('tags.index');
     Route::prefix('tags')->middleware('role:author,editor,admin')->group(function () {
-        Route::get('/backend', [BackTagController::class, 'index'])->name('tags.index');
         Route::get('/create', [BackTagController::class, 'create'])->name('tags.create');
         Route::post('/', [BackTagController::class, 'store'])->name('tags.store');
         Route::get('/{tag}/edit', [BackTagController::class, 'edit'])->name('tags.edit');
@@ -71,8 +69,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{tag}', [BackTagController::class, 'destroy'])->name('tags.destroy');
     });
 
+    Route::get('/categories', [BackCategoryController::class, 'index'])->name('backend.categories.index');
     Route::prefix('categories')->middleware('role:editor,admin')->group(function () {
-        Route::get('/', [BackCategoryController::class, 'index'])->name('backend.categories.index');
         Route::get('/create', [BackCategoryController::class, 'create'])->name('backend.categories.create');
         Route::post('/', [BackCategoryController::class, 'store'])->name('backend.categories.store');
         Route::get('/{category}/edit', [BackCategoryController::class, 'edit'])->name('backend.categories.edit');
@@ -80,13 +78,22 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{category}', [BackCategoryController::class, 'destroy'])->name('backend.categories.destroy');
     });
 
-    Route::prefix('user')->middleware('role:admin')->group(function () {
+    Route::prefix('users')->middleware('role:admin')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/', [UserController::class, 'store'])->name('users.store');
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
+
+    Route::prefix('comments')->group(function () {
+       Route::get('/', [CommentController::class, 'index'])->name('comments.index');
+       Route::get('/create', [CommentController::class, 'create'])->name('comments.create');
+       Route::post('/', [CommentController::class, 'store'])->name('comments.store');
+       Route::get('/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+       Route::put('/{comment}', [CommentController::class, 'update'])->name('comments.update');
+       Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     });
 });
 

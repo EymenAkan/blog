@@ -41,7 +41,7 @@
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb" style="background: transparent; padding: 0;">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('posts.index') }}"
+                        <a href="{{ route('blog.index') }}"
                            class="text-decoration-none"
                            style="color: var(--text-secondary);">
                             <i class="fas fa-home me-1"></i>
@@ -77,7 +77,8 @@
                         @endforeach
                     </div>
 
-                    <h1 class="mb-3" style="font-family: 'Playfair Display', serif; color: var(--text-primary); font-weight: 600; line-height: 1.3;">
+                    <h1 class="mb-3"
+                        style="font-family: 'Playfair Display', serif; color: var(--text-primary); font-weight: 600; line-height: 1.3;">
                         {{ $post->title }}
                     </h1>
 
@@ -117,24 +118,6 @@
                 </div>
 
                 <!-- Post Footer -->
-                <footer class="border-top pt-4">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-balanced-outline btn-sm">
-                                    <i class="fas fa-edit me-1"></i>
-                                    Edit Post
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                            <a href="{{ route('posts.index') }}" class="btn btn-balanced btn-sm">
-                                <i class="fas fa-arrow-left me-1"></i>
-                                Back to Posts
-                            </a>
-                        </div>
-                    </div>
-                </footer>
             </article>
         </div>
 
@@ -179,7 +162,7 @@
                     @foreach($relatedPosts as $relatedPost)
                         <div class="mb-3 pb-3 {{ !$loop->last ? 'border-bottom' : '' }}">
                             <h6 class="mb-2">
-                                <a href="{{ route('post.show', $relatedPost->id) }}"
+                                <a href="{{ route('blog.show', $relatedPost->id) }}"
                                    class="text-decoration-none"
                                    style="color: var(--text-primary); line-height: 1.4;">
                                     {{ Str::limit($relatedPost->title, 60) }}
@@ -218,7 +201,8 @@
                         Manage Tags
                     </a>
                     @if($post->tags->count() > 0)
-                        <a href="{{ route('posts.filterByTag', $post->tags->first()->slug) }}" class="btn btn-balanced-outline btn-sm">
+                        <a href="{{ route('posts.filterByTag', $post->tags->first()->slug) }}"
+                           class="btn btn-balanced-outline btn-sm">
                             <i class="fas fa-filter me-2"></i>
                             More {{ $post->tags->first()->name }} Posts
                         </a>
@@ -286,7 +270,7 @@
                                 Previous Post
                             </small>
                             <div>
-                                <a href="{{ route('post.show', $prevPost->id) }}"
+                                <a href="{{ route('blog.show', $prevPost->id) }}"
                                    class="text-decoration-none"
                                    style="color: var(--text-primary); font-weight: 500;">
                                     {{ Str::limit($prevPost->title, 50) }}
@@ -302,7 +286,7 @@
                                 Next Post
                             </small>
                             <div>
-                                <a href="{{ route('post.show', $nextPost->id) }}"
+                                <a href="{{ route('blog.show', $nextPost->id) }}"
                                    class="text-decoration-none"
                                    style="color: var(--text-primary); font-weight: 500;">
                                     {{ Str::limit($nextPost->title, 50) }}
@@ -313,6 +297,68 @@
                 </div>
             @endif
         </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="mt-5">
+        <h5 class="mb-4" style="color: var(--text-primary); font-weight: 600;">
+            <i class="fas fa-comments me-2" style="color: var(--primary-color);"></i>
+            Comments
+        </h5>
+
+        <!-- Display Comments -->
+        @if($post->comments->count() > 0)
+            @foreach($post->comments as $comment)
+                <div class="comment-card mb-3 p-3" style="background: #f8f9fa; border-radius: 8px;">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="me-3">
+                            <i class="fas fa-user-circle img-user"
+                               style="font-size: 30px; color: var(--text-muted);"></i>
+                        </div>
+                        <div>
+                            <strong style="color: var(--text-primary);">{{ $comment->user->name }}</strong>
+                            <small class="ms-2"
+                                   style="color: var(--text-muted);">{{ $comment->created_at->diffForHumans() }}</small>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-primary); margin: 0;">{{ $comment->comment }}</p>
+                </div>
+            @endforeach
+        @else
+            <p style="color: var(--text-muted);">No comments yet. Be the first to comment!</p>
+        @endif
+
+        <!-- Comment Form (Only for Authenticated Users) -->
+        @auth
+            <div class="comment-form mt-4">
+                <h6 style="color: var(--text-primary); font-weight: 500;">Add a Comment</h6>
+                <form action="{{ route('posts.comment.store', $post->id) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <textarea name="comment" class="form-control" rows="4" placeholder="Write your comment..."
+                                  required maxlength="255"></textarea>
+                        @error('comment')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-balanced"
+                            style="background: var(--primary-color); color: white;">
+                        <i class="fas fa-paper-plane me-2"></i>Post Comment
+                    </button>
+                </form>
+            </div>
+        @else
+            <div class="comment-form mt-4">
+                <h6 style="color: var(--text-primary); font-weight: 500;">Add a Comment</h6>
+                <textarea class="form-control" rows="4" placeholder="Please login to post a comment..." disabled></textarea>
+                <button class="btn btn-balanced mt-2" style="background: var(--primary-color); color: white;" disabled>
+                    <i class="fas fa-paper-plane me-2"></i>Post Comment
+                </button>
+                <small class="mt-2 d-block" style="color: var(--text-muted);">
+                    <a href="{{ route('login') }}" style="color: var(--primary-color);">Login</a> to enable commenting.
+                </small>
+            </div>
+        @endauth
     </div>
 @endsection
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -31,6 +32,20 @@ class PostController extends Controller
     {
         $post = Post::where('slug', $slug)->firstOrFail();
         return view('frontend.posts.show', compact('post'));
+    }
+
+    public function CommentStore(Request $request)
+    {
+        request()->validate([
+            'comment' => 'required|string|max:255',
+        ]);
+
+        $input = $request->all();
+        $input['user_id'] = auth()->id();
+
+        Comment::create($input);
+
+        return back()->with('success', 'Comment added successfully.');
     }
 
 }
