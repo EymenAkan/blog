@@ -18,7 +18,7 @@
                 what I've learned in my programming journey!
             </p>
             <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
-                <a href="{{ route('posts.index') }}" class="btn btn-balanced btn-lg">
+                <a href="{{ route('blog.index') }}" class="btn btn-balanced btn-lg">
                     <i class="fas fa-cogde me-2"></i>
                     View Project
                 </a>
@@ -136,7 +136,7 @@
             </div>
 
             <div class="text-center">
-                <a href="{{ route('posts.index') }}" class="btn btn-balanced-outline btn-lg">
+                <a href="{{ route('blog.index') }}" class="btn btn-balanced-outline btn-lg">
                     <i class="fas fa-folder-open me-2"></i>
                     View All Demo Content
                 </a>
@@ -337,7 +337,7 @@
 
             <div class="demo-grid">
                 @foreach($popularTags as $tag)
-                    <a href="{{ route('posts.filterByTag', $tag->slug) }}"
+                    <a href="{{ route('blog.filterByTag', $tag->slug) }}"
                        class="demo-card"
                        style="--demo-color: {{ $tag->theme_color }};">
                         <div class="demo-content">
@@ -363,7 +363,7 @@
                 Feel free to explore the demo content or learn more about my journey!
             </p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="{{ route('posts.index') }}" class="btn btn-outline-light btn-lg">
+                <a href="{{ route('blog.index') }}" class="btn btn-outline-light btn-lg">
                     <i class="fas fa-code me-2"></i>
                     Explore Demo
                 </a>

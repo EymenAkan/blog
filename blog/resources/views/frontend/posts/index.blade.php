@@ -65,7 +65,7 @@
                                 <div class="p-3">
                                     <div class="mb-3">
                                         @foreach ($post->tags as $postTag)
-                                            <a href="{{ route('posts.filterByTag', $postTag->slug) }}"
+                                            <a href="{{ route('blog.filterByTag', $postTag->slug) }}"
                                                class="tag-badge"
                                                style="background: linear-gradient(135deg, {{ $postTag->theme_color }}, {{ $postTag->theme_color }}dd);">
                                                 {{ $postTag->name }}
@@ -107,7 +107,7 @@
                         <i class="fas fa-search fa-3x mb-3" style="color: var(--text-muted);"></i>
                         <h3>No Posts Found</h3>
                         <p style="color: var(--text-secondary);">No posts found with the tag "{{ $tag->name }}"</p>
-                        <a href="{{ route('posts.index') }}" class="btn btn-balanced-outline">
+                        <a href="{{ route('blog.index') }}" class="btn btn-balanced-outline">
                             <i class="fas fa-arrow-left me-2"></i>
                             View All Posts
                         </a>
@@ -142,7 +142,7 @@
                             <tbody>
                             <tr class="{{ !isset($tag) ? 'table-active' : '' }}">
                                 <td>
-                                    <a href="{{ route('posts.index') }}"
+                                    <a href="{{ route('blog.index') }}"
                                        class="text-decoration-none fw-semibold"
                                        style="color: var(--text-primary);">
                                         <i class="fas fa-home me-2"></i>
@@ -159,7 +159,7 @@
                             @foreach($allTags as $sidebarTag)
                                 <tr class="{{ isset($tag) && $tag->id === $sidebarTag->id ? 'table-active' : '' }}">
                                     <td>
-                                        <a href="{{ route('posts.filterByTag', $sidebarTag->slug) }}"
+                                        <a href="{{ route('blog.filterByTag', $sidebarTag->slug) }}"
                                            class="text-decoration-none"
                                            style="color: var(--text-primary);">
                                             {{ $sidebarTag->name }}
@@ -210,7 +210,7 @@
                     </h5>
                     <div class="d-flex flex-wrap gap-2">
                         @foreach($allTags->sortByDesc('posts_count')->take(6) as $popularTag)
-                            <a href="{{ route('posts.filterByTag', $popularTag->slug) }}"
+                            <a href="{{ route('blog.filterByTag', $popularTag->slug) }}"
                                class="tag-badge"
                                style="background: linear-gradient(135deg, {{ $popularTag->theme_color }}, {{ $popularTag->theme_color }}cc);">
                                 {{ $popularTag->name }}

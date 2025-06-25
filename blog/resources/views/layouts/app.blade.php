@@ -820,7 +820,7 @@
                     <i class="fas fa-filter me-1" aria-hidden="true"></i>
                     Filtering by: <strong>{{ $tag->name }}</strong>
                 </span>
-                <a href="{{ route('posts.index') }}"
+                <a href="{{ route('blog.index') }}"
                    class="btn btn-sm btn-outline-light"
                    aria-label="Clear tag filter"
                    style="border-radius: 20px;">

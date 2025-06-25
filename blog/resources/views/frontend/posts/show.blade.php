@@ -194,11 +194,7 @@
                 <div class="d-grid gap-2">
                     <a href="{{ route('posts.create') }}" class="btn btn-balanced btn-sm">
                         <i class="fas fa-plus me-2"></i>
-                        Write New Post
-                    </a>
-                    <a href="{{ route('tags.index') }}" class="btn btn-balanced-outline btn-sm">
-                        <i class="fas fa-tags me-2"></i>
-                        Manage Tags
+                        Do you also want to write a post ?
                     </a>
                     @if($post->tags->count() > 0)
                         <a href="{{ route('posts.filterByTag', $post->tags->first()->slug) }}"
@@ -332,8 +328,9 @@
         @auth
             <div class="comment-form mt-4">
                 <h6 style="color: var(--text-primary); font-weight: 500;">Add a Comment</h6>
-                <form action="{{ route('posts.comment.store', $post->id) }}" method="POST">
+                <form action="{{ route('comments.store') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <div class="mb-3">
                         <textarea name="comment" class="form-control" rows="4" placeholder="Write your comment..."
                                   required maxlength="255"></textarea>

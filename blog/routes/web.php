@@ -30,7 +30,7 @@ use App\Http\Controllers\Backend\Category\CategoryController as BackCategoryCont
     });
 
     Route::get('tags/', [FrontTagController::class, 'index'])->name('filter.index');
-    Route::get('/posts/tag/{tag:slug}', [FrontPostController::class, 'filterByTag'])->name('posts.filterByTag');
+    Route::get('/blog/tag/{tag:slug}', [FrontPostController::class, 'filterByTag'])->name('blog.filterByTag');
 
     Route::get('/password/reset', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -88,12 +88,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('comments')->group(function () {
-       Route::get('/', [CommentController::class, 'index'])->name('comments.index');
-       Route::get('/create', [CommentController::class, 'create'])->name('comments.create');
-       Route::post('/', [CommentController::class, 'store'])->name('comments.store');
-       Route::get('/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
-       Route::put('/{comment}', [CommentController::class, 'update'])->name('comments.update');
-       Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+        Route::get('/', [App\Http\Controllers\Backend\Comment\CommentController::class, 'index'])->name('comments.index');
+        Route::get('/create', [App\Http\Controllers\Backend\Comment\CommentController::class, 'create'])->name('comments.create');
+        Route::post('/', [App\Http\Controllers\Backend\Comment\CommentController::class, 'store'])->name('comments.store');
+        Route::get('/{comment}/edit', [App\Http\Controllers\Backend\Comment\CommentController::class, 'edit'])->name('comments.edit');
+        Route::put('/{comment}', [App\Http\Controllers\Backend\Comment\CommentController::class, 'update'])->name('comments.update');
+        Route::delete('/{comment}', [App\Http\Controllers\Backend\Comment\CommentController::class, 'destroy'])->name('comments.destroy');
     });
 });
 
