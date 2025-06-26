@@ -50,7 +50,7 @@
                     </li>
                     @if($post->tags->count() > 0)
                         <li class="breadcrumb-item">
-                            <a href="{{ route('posts.filterByTag', $post->tags->first()->slug) }}"
+                            <a href="{{ route('blog.filterByTag', $post->tags->first()->slug) }}"
                                class="text-decoration-none"
                                style="color: var(--text-secondary);">
                                 {{ $post->tags->first()->name }}
@@ -69,7 +69,7 @@
                 <header class="mb-4">
                     <div class="mb-3">
                         @foreach ($post->tags as $tag)
-                            <a href="{{ route('posts.filterByTag', $tag->slug) }}"
+                            <a href="{{ route('blog.filterByTag', $tag->slug) }}"
                                class="tag-badge"
                                style="background: linear-gradient(135deg, {{ $tag->theme_color }}, {{ $tag->theme_color }}dd);">
                                 {{ $tag->name }}
@@ -132,7 +132,7 @@
                     </h5>
                     <div class="d-flex flex-wrap gap-2">
                         @foreach ($post->tags as $tag)
-                            <a href="{{ route('posts.filterByTag', $tag->slug) }}"
+                            <a href="{{ route('blog.filterByTag', $tag->slug) }}"
                                class="tag-badge"
                                style="background: linear-gradient(135deg, {{ $tag->theme_color }}, {{ $tag->theme_color }}cc);">
                                 {{ $tag->name }}
@@ -197,7 +197,7 @@
                         Do you also want to write a post ?
                     </a>
                     @if($post->tags->count() > 0)
-                        <a href="{{ route('posts.filterByTag', $post->tags->first()->slug) }}"
+                        <a href="{{ route('blog.filterByTag', $post->tags->first()->slug) }}"
                            class="btn btn-balanced-outline btn-sm">
                             <i class="fas fa-filter me-2"></i>
                             More {{ $post->tags->first()->name }} Posts
