@@ -18,40 +18,43 @@
         $activeTagColorDark = sprintf("#%02x%02x%02x",
             max(0, $r - 40), max(0, $g - 40), max(0, $b - 40));
         $activeTagColorLight = sprintf("#%02x%02x%02x",
-            min(255, $r + 40), min(255, $g + 40), min(255, $b + 40));
+            min(255, $r + 40), min(255, $g + 40));
     }
 
     $allTags = \App\Models\Tag::withCount('posts')->orderBy('name')->get();
 @endphp
 
-@section('title', isset($tag) ? $tag->name . ' Posts - Eymen\'s Blog' : 'Eymen\'s Blog')
+@section('title', isset($tag)
+    ? __('posts.title_with_tag', ['tag' => $tag->name])
+    : __('posts.title_default'))
 
 @section('hero')
     <div class="text-center">
-        @if(isset($tag))
-            <h1 class="hero-title">{{ $tag->name }}</h1>
-            <p class="hero-subtitle">{{ $posts->count() }} {{ Str::plural('post', $posts->count()) }} found</p>
-        @else
-            <h1 class="hero-title">Welcome to My Blog</h1>
-            <p class="hero-subtitle">Personal thoughts, experiences, and discoveries</p>
-        @endif
-
+        <h1 class="hero-title">
+            {{ isset($tag) ? $tag->name : __('posts.hero_default_title') }}
+        </h1>
+        <p class="hero-subtitle">
+            {{ isset($tag)
+                ? __('posts.hero_tag_subtitle', ['count' => $posts->count(), 'post' => Str::plural('post', $posts->count())])
+                : __('posts.hero_default_subtitle') }}
+        </p>
     </div>
 @endsection
 
 @section('content')
     @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 12px; border: none;">
+        <div class="alert alert-success alert-dismissible fade show" role="alert"
+             style="border-radius: 12px; border: none;">
             <i class="fas fa-check-circle me-2"></i>
             {{ $message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Read More" ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     <div class="row">
         <!-- Main Content -->
         <div class="col-lg-8">
-            @if (count($posts) > 0)
+            @if ($posts->count() > 0)
                 @foreach ($posts as $post)
                     <article class="content-card">
                         <div class="row g-0">
@@ -73,7 +76,8 @@
                                         @endforeach
                                     </div>
 
-                                    <h4 class="mb-2" style="font-family: 'Playfair Display', serif; color: var(--text-primary);">
+                                    <h4 class="mb-2"
+                                        style="font-family: 'Playfair Display', serif; color: var(--text-primary);">
                                         <a href="{{route('blog.show', $post->slug)}}"
                                            class="text-decoration-none"
                                            style="color: inherit;">
@@ -89,7 +93,7 @@
                                         <a href="{{route('blog.show', $post->slug)}}"
                                            class="btn btn-balanced-outline btn-sm">
                                             <i class="fas fa-arrow-right me-1"></i>
-                                            Read More
+                                            {{ __('posts.button_read_more') }}
                                         </a>
                                         <small style="color: var(--text-muted);">
                                             <i class="fas fa-calendar me-1"></i>
@@ -105,16 +109,18 @@
                 <div class="content-card text-center py-5">
                     @if(isset($tag))
                         <i class="fas fa-search fa-3x mb-3" style="color: var(--text-muted);"></i>
-                        <h3>No Posts Found</h3>
-                        <p style="color: var(--text-secondary);">No posts found with the tag "{{ $tag->name }}"</p>
+                        <h3>{{ __('posts.no_posts_found') }}</h3>
+                        <p style="color: var(--text-secondary);">
+                            {{ __('posts.no_posts_found_for', ['tag' => $tag->name]) }}
+                        </p>
                         <a href="{{ route('blog.index') }}" class="btn btn-balanced-outline">
                             <i class="fas fa-arrow-left me-2"></i>
-                            View All Posts
+                            {{ __('posts.button_view_all') }}
                         </a>
                     @else
                         <i class="fas fa-pen-fancy fa-3x mb-3" style="color: var(--text-muted);"></i>
-                        <h3>No Posts Yet</h3>
-                        <p style="color: var(--text-secondary);">Start sharing your thoughts and experiences!</p>
+                        <h3>{{ __('posts.no_posts_yet') }}</h3>
+                        <p style="color: var(--text-secondary);">{{ __('posts.start_sharing') }}</p>
                     @endif
                 </div>
             @endif
@@ -126,7 +132,7 @@
             <div class="sidebar-card">
                 <h5 class="mb-3" style="color: var(--text-primary); font-weight: 600;">
                     <i class="fas fa-filter me-2" style="color: var(--primary-color);"></i>
-                    Filter by Topic
+                    {{ __('posts.filter_by_topic') }}
                 </h5>
 
                 @if($allTags->count() > 0)
@@ -134,9 +140,9 @@
                         <table class="table table-sm filter-table">
                             <thead>
                             <tr>
-                                <th>Topic</th>
-                                <th class="text-center">Posts</th>
-                                <th class="text-center">Color</th>
+                                <th>{{ __('posts.topic') }}</th>
+                                <th class="text-center">{{ __('posts.posts') }}</th>
+                                <th class="text-center">{{ __('posts.color') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -146,7 +152,7 @@
                                        class="text-decoration-none fw-semibold"
                                        style="color: var(--text-primary);">
                                         <i class="fas fa-home me-2"></i>
-                                        All Posts
+                                        {{ __('posts.all_posts') }}
                                     </a>
                                 </td>
                                 <td class="text-center">
@@ -169,7 +175,8 @@
                                         <span class="post-count-badge">{{ $sidebarTag->posts_count }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="tag-color-dot" style="background: {{ $sidebarTag->theme_color }};"></span>
+                                        <span class="tag-color-dot"
+                                              style="background: {{ $sidebarTag->theme_color }};"></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -183,19 +190,19 @@
             <div class="sidebar-card">
                 <h5 class="mb-3" style="color: var(--text-primary); font-weight: 600;">
                     <i class="fas fa-chart-bar me-2" style="color: var(--primary-color);"></i>
-                    Blog Stats
+                    {{ __('posts.blog_stats') }}
                 </h5>
                 <div class="row">
                     <div class="col-6">
                         <div class="stats-card">
                             <div class="stats-number">{{ $posts->count() }}</div>
-                            <small style="color: var(--text-third);">Total Posts</small>
+                            <small style="color: var(--text-third);">{{ __('posts.total_posts') }}</small>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="stats-card">
                             <div class="stats-number">{{ $allTags->count() }}</div>
-                            <small style="color: var(--text-third);">Topics</small>
+                            <small style="color: var(--text-third);">{{ __('posts.total_topics') }}</small>
                         </div>
                     </div>
                 </div>
@@ -206,7 +213,7 @@
                 <div class="sidebar-card">
                     <h5 class="mb-3" style="color: var(--text-primary); font-weight: 600;">
                         <i class="fas fa-fire me-2" style="color: var(--primary-color);"></i>
-                        Popular Topics
+                        {{ __('posts.popular_topics') }}
                     </h5>
                     <div class="d-flex flex-wrap gap-2">
                         @foreach($allTags->sortByDesc('posts_count')->take(6) as $popularTag)

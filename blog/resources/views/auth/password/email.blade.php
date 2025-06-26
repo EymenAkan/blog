@@ -1,21 +1,21 @@
 @component('mail::message')
-    # Reset Your Password
+    # {{ __('auth.reset_password_heading') }}
 
-    Hello,
+    {{ __('auth.reset_password_greeting') }}
 
-    We received a request to reset the password for your **Your Blog** account. Click the button below to set a new password:
+    {{ __('auth.reset_password_intro') }}
 
     @component('mail::button', ['url' => $url, 'color' => 'primary'])
-        Reset Password
+        {{ __('auth.reset_password_button') }}
     @endcomponent
 
-    If you did not request a password reset, please ignore this email or contact support if you have concerns.
+    {{ __('auth.reset_password_note') }}
 
-    Thanks,
-    The Your Blog Team
+    {{ __('auth.thanks') }},
+    {{ __('auth.team_name') }}
 
     @component('mail::subcopy')
-        If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:
+        {{ __('auth.reset_password_subcopy') }}
         [{{ $url }}]({{ $url }})
     @endcomponent
 @endcomponent

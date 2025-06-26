@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@yield('title', config('app.name', 'Eymen\'s Blog'))</title>
+    <title>@yield('title', __('app.app_name'))</title>
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" media="print"
@@ -194,7 +194,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -392,7 +392,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.6s;
         }
 
@@ -453,7 +453,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transition: left 0.6s;
         }
 
@@ -555,7 +555,7 @@
             color: white !important;
             border-radius: 20px !important;
             box-shadow: var(--bloom-shadow) !important;
-            border: 2px solid rgba(255,255,255,0.2) !important;
+            border: 2px solid rgba(255, 255, 255, 0.2) !important;
         }
 
         /* Scroll to Top with Bloom */
@@ -695,8 +695,12 @@
 
         /* Loading animation */
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .loading {
@@ -711,22 +715,22 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-balanced" role="navigation" aria-label="Main navigation" id="mainNavbar">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('index') }}" aria-label="Go to homepage">
+            <a class="navbar-brand" href="{{ route('index') }}" aria-label="{{ __('app.brand') }}">
                 <i class="fas fa-feather-alt me-2" aria-hidden="true"></i>
-                Eymen's Blog
+                {{ __('app.brand') }}
             </a>
 
             <button class="navbar-toggler"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarNav"
-                    aria-label="Toggle navigation menu"
+                    aria-label="{{ __('app.nav_home') }} menu toggle"
                     aria-controls="navbarNav"
                     aria-expanded="false"
                     title="Toggle menu">
-                <span class="navbar-toggler-icon">
-                    <i class="fas fa-bars" aria-hidden="true"></i>
-                </span>
+        <span class="navbar-toggler-icon">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -735,25 +739,25 @@
                        href="{{ route('index') }}"
                        aria-current="{{ request()->routeIs('index') ? 'page' : 'false' }}">
                         <i class="fas fa-home me-1" aria-hidden="true"></i>
-                        Home
+                        {{ __('app.nav_home') }}
                     </a>
                     <a class="nav-link {{ request()->routeIs('blog.*') ? 'active' : '' }}"
                        href="{{ route('blog.index') }}"
                        aria-current="{{ request()->routeIs('blog.*') ? 'page' : 'false' }}">
                         <i class="fas fa-blog me-1" aria-hidden="true"></i>
-                        Blog
+                        {{ __('app.nav_blog') }}
                     </a>
                     <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}"
                        href="{{ route('about') }}"
                        aria-current="{{ request()->routeIs('about') ? 'page' : 'false' }}">
                         <i class="fas fa-user me-1" aria-hidden="true"></i>
-                        About
+                        {{ __('app.nav_about') }}
                     </a>
                     <a class="nav-link {{ request()->routeIs('filter.*') ? 'active' : '' }}"
                        href="{{ route('filter.index') }}"
                        aria-current="{{ request()->routeIs('filter.*') ? 'page' : 'false' }}">
                         <i class="fas fa-tags me-1" aria-hidden="true"></i>
-                        Tags
+                        {{ __('app.nav_tags') }}
                     </a>
                 </div>
 
@@ -761,35 +765,38 @@
                 <div class="auth-buttons">
                     @auth
                         <div class="dropdown user-dropdown">
-                            <div class="user-avatar" data-bs-toggle="dropdown" aria-expanded="false" title="{{ Auth::user()->name }}">
+                            <div class="user-avatar" data-bs-toggle="dropdown" aria-expanded="false"
+                                 title="{{ Auth::user()->name }}">
                                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                             </div>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="{{ route('dashboard') }}">
                                         <i class="fas fa-tachometer-alt me-2"></i>
-                                        Dashboard
+                                        {{ __('app.dashboard') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                         <i class="fas fa-user-circle me-2"></i>
-                                        Profile
+                                        {{ __('app.profile') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         <i class="fas fa-cog me-2"></i>
-                                        Settings
+                                        {{ __('app.settings') }}
                                     </a>
                                 </li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                         @csrf
                                         <button type="submit" class="dropdown-item text-danger">
                                             <i class="fas fa-sign-out-alt me-2"></i>
-                                            Logout
+                                            {{ __('app.logout') }}
                                         </button>
                                     </form>
                                 </li>
@@ -798,11 +805,11 @@
                     @else
                         <a href="{{ route('login') }}" class="btn-auth btn-login">
                             <i class="fas fa-sign-in-alt"></i>
-                            Login
+                            {{ __('app.login') }}
                         </a>
                         <a href="{{ route('register') }}" class="btn-auth btn-register">
                             <i class="fas fa-user-plus"></i>
-                            Register
+                            {{ __('app.register') }}
                         </a>
                     @endauth
                 </div>
@@ -816,16 +823,16 @@
         <div class="alert alert-info"
              style="background: var(--gradient-primary); border: none; color: white; border-radius: 20px; box-shadow: var(--bloom-shadow) !important; border: 2px solid rgba(255,255,255,0.2) !important;">
             <div class="d-flex align-items-center justify-content-center flex-wrap">
-                <span class="me-2">
-                    <i class="fas fa-filter me-1" aria-hidden="true"></i>
-                    Filtering by: <strong>{{ $tag->name }}</strong>
-                </span>
+            <span class="me-2">
+                <i class="fas fa-filter me-1" aria-hidden="true"></i>
+                {{ __('app.filtering_by') }} <strong>{{ $tag->name }}</strong>
+            </span>
                 <a href="{{ route('blog.index') }}"
                    class="btn btn-sm btn-outline-light"
-                   aria-label="Clear tag filter"
+                   aria-label="{{ __('app.clear') }} tag filter"
                    style="border-radius: 20px;">
                     <i class="fas fa-times me-1" aria-hidden="true"></i>
-                    Clear
+                    {{ __('app.clear') }}
                 </a>
             </div>
         </div>
@@ -833,13 +840,14 @@
 @endif
 
 @hasSection('hero')
-    <section class="hero-balanced" role="region" aria-label="Hero section">
+    <section class="hero-balanced" role="region" aria-label="{{ __('app.hero_section_label') }}">
         <div class="container">
             <div class="hero-content text-center">
                 @yield('hero')
             </div>
         </div>
     </section>
+
 @endif
 
 <main class="container my-3" role="main">
@@ -857,7 +865,7 @@
 
 <script>
     // Enhanced navbar scroll effect
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const navbar = document.getElementById('mainNavbar');
         const scrollToTop = document.getElementById('scrollToTop');
 
@@ -871,7 +879,7 @@
     });
 
     // Scroll to top functionality
-    document.getElementById('scrollToTop').addEventListener('click', function() {
+    document.getElementById('scrollToTop').addEventListener('click', function () {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -880,14 +888,14 @@
 
     // Enhanced dropdown hover effect
     document.querySelectorAll('.dropdown').forEach(dropdown => {
-        dropdown.addEventListener('mouseenter', function() {
+        dropdown.addEventListener('mouseenter', function () {
             this.querySelector('.dropdown-toggle').click();
         });
     });
 
     // Add loading animation to buttons
     document.querySelectorAll('.btn-balanced, .btn-auth').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             this.classList.add('loading');
             setTimeout(() => {
                 this.classList.remove('loading');

@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Reset Your Password')
+@section('title', __('auth.reset_password_title'))
 
 @section('content')
     <div class="auth-container">
@@ -9,11 +9,11 @@
                 <div class="auth-brand">
                     <a href="{{ route('index') }}" class="d-flex align-items-center text-decoration-none">
                         <i class="fas fa-book-open me-2" style="color: var(--primary-color);"></i>
-                        <span class="brand-text">Your Blog</span>
+                        <span class="brand-text">{{ config('app.name', 'Your Blog') }}</span>
                     </a>
                 </div>
-                <h1 class="auth-title">Reset Password</h1>
-                <p class="auth-subtitle">Enter your new password below</p>
+                <h1 class="auth-title">{{ __('auth.reset_password_heading') }}</h1>
+                <p class="auth-subtitle">{{ __('auth.reset_password_description') }}</p>
             </div>
 
             <div class="auth-body">
@@ -38,14 +38,14 @@
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                     <div class="form-group mb-3">
-                        <label for="email" class="form-label">Email Address</label>
+                        <label for="email" class="form-label">{{ __('auth.email_address') }}</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="fas fa-envelope"></i>
                             </span>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                    id="email" name="email" value="{{ old('email', $request->email) }}"
-                                   placeholder="your.email@example.com" required>
+                                   placeholder="{{ __('auth.email_placeholder') }}" required>
                         </div>
                         @error('email')
                         <div class="invalid-feedback d-block">
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="password" class="form-label">New Password</label>
+                        <label for="password" class="form-label">{{ __('auth.new_password') }}</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="fas fa-lock"></i>
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                        <label for="password_confirmation" class="form-label">{{ __('auth.confirm_password') }}</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="fas fa-lock"></i>
@@ -90,7 +90,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-balanced btn-lg w-100">
                             <i class="fas fa-key me-2"></i>
-                            Reset Password
+                            {{ __('auth.reset_password_button') }}
                         </button>
                     </div>
                 </form>
@@ -98,12 +98,12 @@
 
             <div class="auth-footer">
                 <p class="text-center mb-0">
-                    Remembered your password?
-                    <a href="{{ route('login') }}" class="auth-link">Sign In</a>
+                    {{ __('auth.remember_password') }}
+                    <a href="{{ route('login') }}" class="auth-link">{{ __('auth.sign_in') }}</a>
                 </p>
                 <p class="text-center mb-0">
-                    Don't have an account?
-                    <a href="{{ route('register') }}" class="auth-link">Create Account</a>
+                    {{ __('auth.dont_have_account') }}
+                    <a href="{{ route('register') }}" class="auth-link">{{ __('auth.create_account') }}</a>
                 </p>
             </div>
         </div>
@@ -111,8 +111,8 @@
         <div class="auth-image">
             <div class="auth-quote">
                 <i class="fas fa-quote-left fa-2x mb-3" style="opacity: 0.5;"></i>
-                <p class="quote-text">The only way to do great work is to love what you do.</p>
-                <p class="quote-author">— Steve Jobs</p>
+                <p class="quote-text">{{ __('auth.quote') }}</p>
+                <p class="quote-author">{{ __('auth.quote_author') }}</p>
             </div>
         </div>
     </div>

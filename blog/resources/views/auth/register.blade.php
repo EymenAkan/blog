@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Create Your Account')
+@section('title', __('auth.register_title'))
 
 @section('content')
     <div class="auth-container">
@@ -9,11 +9,11 @@
                 <div class="auth-brand">
                     <a href="{{ route('index') }}" class="d-flex align-items-center text-decoration-none">
                         <i class="fas fa-book-open me-2" style="color: var(--primary-color);"></i>
-                        <span class="brand-text">Your Blog</span>
+                        <span class="brand-text">{{ config('app.name', 'Your Blog') }}</span>
                     </a>
                 </div>
-                <h1 class="auth-title">Join Our Community</h1>
-                <p class="auth-subtitle">Create an account to get started</p>
+                <h1 class="auth-title">{{ __('auth.join_community') }}</h1>
+                <p class="auth-subtitle">{{ __('auth.create_account_to_start') }}</p>
             </div>
 
             <div class="auth-body">
@@ -32,84 +32,77 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="name" class="form-label">Full Name</label>
+                                <label for="name" class="form-label">{{ __('auth.full_name') }}</label>
                                 <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="fas fa-user"></i>
                                 </span>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                            id="name" name="name" value="{{ old('name') }}"
-                                           placeholder="John Doe" required autofocus>
+                                           placeholder="{{ __('auth.name_placeholder') }}" required autofocus>
                                 </div>
                                 @error('name')
-                                <div class="invalid-feedback d-block">
-                                    {{ $message }}
-                                </div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="username" class="form-label">Username</label>
+                                <label for="username" class="form-label">{{ __('auth.username') }}</label>
                                 <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="fas fa-at"></i>
                                 </span>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
                                            id="username" name="username" value="{{ old('username') }}"
-                                           placeholder="johndoe" required>
+                                           placeholder="{{ __('auth.username_placeholder') }}" required>
                                 </div>
                                 @error('username')
-                                <div class="invalid-feedback d-block">
-                                    {{ $message }}
-                                </div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="email" class="form-label">Email Address</label>
+                        <label for="email" class="form-label">{{ __('auth.email_address') }}</label>
                         <div class="input-group">
                         <span class="input-group-text">
                             <i class="fas fa-envelope"></i>
                         </span>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                    id="email" name="email" value="{{ old('email') }}"
-                                   placeholder="your.email@example.com" required>
+                                   placeholder="{{ __('auth.email_placeholder') }}" required>
                         </div>
                         @error('email')
-                        <div class="invalid-feedback d-block">
-                            {{ $message }}
-                        </div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="password" class="form-label">{{ __('auth.password') }}</label>
                                 <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="fas fa-lock"></i>
                                 </span>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
                                            id="password" name="password" placeholder="••••••••" required>
-                                    <button type="button" class="btn btn-outline-secondary toggle-password"
-                                            tabindex="-1">
+                                    <button type="button" class="btn btn-outline-secondary toggle-password" tabindex="-1" aria-label="{{ __('auth.toggle_password') }}">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
                                 @error('password')
-                                <div class="invalid-feedback d-block">
-                                    {{ $message }}
-                                </div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                <label for="password_confirmation" class="form-label">{{ __('auth.confirm_password') }}</label>
                                 <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="fas fa-lock"></i>
@@ -127,7 +120,7 @@
                             <div class="strength-meter">
                                 <div class="strength-meter-fill" data-strength="0"></div>
                             </div>
-                            <div class="strength-text">Password strength: <span>Too weak</span></div>
+                            <div class="strength-text">{{ __('auth.password_strength') }}: <span>{{ __('auth.too_weak') }}</span></div>
                         </div>
                     </div>
 
@@ -135,9 +128,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
                             <label class="form-check-label" for="terms">
-                                I agree to the <a href="#" class="auth-link">Terms of Service</a> and <a href="#"
-                                                                                                         class="auth-link">Privacy
-                                    Policy</a>
+                                {!! __('auth.agree_terms', ['terms' => '<a href="#" class="auth-link">Terms of Service</a>', 'privacy' => '<a href="#" class="auth-link">Privacy Policy</a>']) !!}
                             </label>
                         </div>
                     </div>
@@ -145,7 +136,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-balanced btn-lg w-100">
                             <i class="fas fa-user-plus me-2"></i>
-                            Create Account
+                            {{ __('auth.create_account') }}
                         </button>
                     </div>
                 </form>
@@ -153,14 +144,14 @@
 
             <div class="auth-footer">
                 <p class="text-center mb-0">
-                    Already have an account?
-                    <a href="{{ route('login') }}" class="auth-link">Sign In</a>
+                    {{ __('auth.already_have_account') }}
+                    <a href="{{ route('login') }}" class="auth-link">{{ __('auth.sign_in') }}</a>
                 </p>
             </div>
 
             <div class="auth-social">
                 <div class="divider">
-                    <span>or sign up with</span>
+                    <span>{{ __('auth.or_sign_up_with') }}</span>
                 </div>
                 <div class="social-buttons">
                     <a href="{{ route('socialite.redirect', 'github') }}"
@@ -168,7 +159,7 @@
                        data-provider="github"
                        onclick="handleSocialLogin(this, 'github')">
                         <i class="fab fa-github"></i>
-                        <span>Continue with GitHub</span>
+                        <span>{{ __('auth.continue_with_github') }}</span>
                     </a>
 
                     <a href="{{ route('socialite.redirect', 'google') }}"
@@ -176,18 +167,18 @@
                        data-provider="google"
                        onclick="handleSocialLogin(this, 'google')">
                         <i class="fab fa-google"></i>
-                        <span>Continue with Google</span>
+                        <span>{{ __('auth.continue_with_google') }}</span>
                     </a>
                 </div>
 
                 <div class="social-benefits">
                     <div class="benefit-item">
                         <i class="fas fa-user-plus"></i>
-                        <span>Auto-fill profile information</span>
+                        <span>{{ __('auth.auto_fill_profile') }}</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-envelope-check"></i>
-                        <span>Pre-verified email address</span>
+                        <span>{{ __('auth.pre_verified_email') }}</span>
                     </div>
                 </div>
             </div>
@@ -196,8 +187,8 @@
         <div class="auth-image">
             <div class="auth-quote">
                 <i class="fas fa-quote-left fa-2x mb-3" style="opacity: 0.5;"></i>
-                <p class="quote-text">The beautiful thing about learning is that nobody can take it away from you.</p>
-                <p class="quote-author">— B.B. King</p>
+                <p class="quote-text">{{ __('auth.register_quote') }}</p>
+                <p class="quote-author">{{ __('auth.register_quote_author') }}</p>
             </div>
         </div>
     </div>

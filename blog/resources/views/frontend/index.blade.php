@@ -1,37 +1,35 @@
 @extends('layouts.app')
 
-@section('title', 'Eymen - Computer Programming Student')
+@section('title', __('home.title'))
 
 @section('hero')
     <div class="row align-items-center">
         <div class="col-lg-6 text-center text-lg-start">
             <h1 class="hero-title mb-3">
-                Hi, I'm <span style="color: #fbbf24;">Eymen</span>
+                {{__('home.hero_hi', ['name' => __('common.student_name')])}}
             </h1>
             <p class="hero-subtitle mb-4">
                 <i class="fas fa-graduation-cap me-2"></i>
-                Computer Programming Student & Aspiring Backend Developer
+                {{__('home.hero_subtitle')}}
             </p>
             <p class="mb-4" style="font-size: 1.1rem; opacity: 0.9; line-height: 1.6;">
-                This blog is my <strong>learning project</strong> built with Laravel to practice
-                backend development skills. It's not a real blog - just a way to showcase
-                what I've learned in my programming journey!
+                {!!__('home.hero_subtitle_description')!!}
             </p>
             <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
                 <a href="{{ route('blog.index') }}" class="btn btn-balanced btn-lg">
-                    <i class="fas fa-cogde me-2"></i>
-                    View Project
+                    <i class="fas fa-code me-2"></i>
+                    {{__('home.button_view_project')}}
                 </a>
                 <a href="#what-i-learned" class="btn btn-outline-light btn-lg">
                     <i class="fas fa-lightbulb me-2"></i>
-                    What I Learned
+                    {{__('home.button_view_learned')}}
                 </a>
             </div>
         </div>
         <div class="col-lg-6 text-center mt-4 mt-lg-0">
             <div class="hero-image-container">
                 <img src="{{ asset('frontend/assets/img/student-coding.svg') }}"
-                     alt="Student Learning to Code"
+                     alt="{{__('common.student_name')}} Learning to Code"
                      class="img-fluid"
                      style="max-width: 400px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));">
             </div>
@@ -42,8 +40,8 @@
 @section('content')
     <section class="mb-5">
         <div class="text-center mb-4">
-            <h2 class="section-title">Project Overview</h2>
-            <p class="section-subtitle">What I built while learning Laravel</p>
+            <h2 class="section-title">{{__('home.project_overview_title')}}</h2>
+            <p class="section-subtitle">{{__('home.project_overview_subtitle')}}</p>
         </div>
         <div class="row text-center">
             <div class="col-md-3 col-6 mb-3">
@@ -52,7 +50,7 @@
                         <i class="fas fa-file-alt fa-2x" style="color: var(--primary-color);"></i>
                     </div>
                     <div class="stat-number">{{ $stats['total_posts'] }}</div>
-                    <div class="stat-label">Sample Posts</div>
+                    <div class="stat-label">{{__('home.stat_post_number')}}</div>
                 </div>
             </div>
             <div class="col-md-3 col-6 mb-3">
@@ -61,7 +59,7 @@
                         <i class="fas fa-tags fa-2x" style="color: var(--accent-color);"></i>
                     </div>
                     <div class="stat-number">{{ $stats['total_tags'] }}</div>
-                    <div class="stat-label">Categories</div>
+                    <div class="stat-label">{{__('home.stat_post_categories_number')}}</div>
                 </div>
             </div>
             <div class="col-md-3 col-6 mb-3">
@@ -69,8 +67,8 @@
                     <div class="stat-icon mb-2">
                         <i class="fas fa-tools fa-2x" style="color: var(--secondary-color);"></i>
                     </div>
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">Technologies</div>
+                    <div class="stat-number">{{ count(__('common.technologies_used')) }}</div>
+                    <div class="stat-label">{{__('home.stat_post_technology_number')}}</div>
                 </div>
             </div>
             <div class="col-md-3 col-6 mb-3">
@@ -78,8 +76,8 @@
                     <div class="stat-icon mb-2">
                         <i class="fas fa-clock fa-2x" style="color: var(--success-color);"></i>
                     </div>
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Weeks Built</div>
+                    <div class="stat-number">{{__('common.project_time_week_number')}}</div>
+                    <div class="stat-label">{{__('home.stat_post_how_many_week_passed_text')}}</div>
                 </div>
             </div>
         </div>
@@ -87,8 +85,8 @@
 
     <section class="mb-5">
         <div class="text-center mb-4">
-            <h2 class="section-title">Sample Content</h2>
-            <p class="section-subtitle">Demo posts I created to test the functionality</p>
+            <h2 class="section-title">{{__('home.posts_content_title')}}</h2>
+            <p class="section-subtitle">{{__('home.posts_content_subtitle')}}</p>
         </div>
 
         @if($recentPosts->count() > 0)
@@ -103,7 +101,7 @@
                                 <div class="project-card-overlay">
                                     <a href="{{ route('blog.show', $post) }}" class="btn btn-balanced btn-sm">
                                         <i class="fas fa-eye me-1"></i>
-                                        View Post
+                                        {{__('home.button_view_post')}}
                                     </a>
                                 </div>
                             </div>
@@ -138,22 +136,23 @@
             <div class="text-center">
                 <a href="{{ route('blog.index') }}" class="btn btn-balanced-outline btn-lg">
                     <i class="fas fa-folder-open me-2"></i>
-                    View All Demo Content
+                    {{__('home.button_view_all_posts')}}
                 </a>
             </div>
         @else
             <div class="text-center py-5">
                 <i class="fas fa-code fa-3x mb-3" style="color: var(--text-muted);"></i>
-                <h4>Project in Development</h4>
-                <p style="color: var(--text-secondary);">Still working on adding demo content!</p>
+                <h4>{{__('home.post_error_title')}}</h4>
+                <p style="color: var(--text-secondary);">{{__('home.post_error_subtitle')}}</p>
+                <small class="text-muted">{{__('common.demo_content_notice')}}</small>
             </div>
         @endif
     </section>
 
     <section id="what-i-learned" class="mb-5">
         <div class="text-center mb-4">
-            <h2 class="section-title">What I Learned Building This</h2>
-            <p class="section-subtitle">Backend development skills I practiced</p>
+            <h2 class="section-title">{{__('home.benefits_title')}}</h2>
+            <p class="section-subtitle">{{__('home.benefits_subtitle')}}</p>
         </div>
 
         <div class="row">
@@ -161,8 +160,8 @@
                 <div class="learning-card">
                     <div class="learning-header">
                         <i class="fas fa-server fa-2x mb-3" style="color: var(--primary-color);"></i>
-                        <h4>Backend Development</h4>
-                        <p class="text-muted">My main focus area</p>
+                        <h4>{{__('home.benefits_left_table_title')}}</h4>
+                        <p class="text-muted">{{__('home.benefits_left_table_subtitle')}}</p>
                     </div>
                     <div class="learning-list">
                         <div class="learning-item">
@@ -170,8 +169,8 @@
                                 <i class="fab fa-laravel" style="color: #ff2d20;"></i>
                             </div>
                             <div class="learning-details">
-                                <h6>Laravel Framework</h6>
-                                <small>MVC architecture, routing, middleware</small>
+                                <h6>{{__('home.benefits_left_table_one_title')}}</h6>
+                                <small>{{__('home.benefits_left_table_one_subtitle')}}</small>
                             </div>
                         </div>
                         <div class="learning-item">
@@ -179,8 +178,8 @@
                                 <i class="fas fa-database" style="color: #336791;"></i>
                             </div>
                             <div class="learning-details">
-                                <h6>Database Design</h6>
-                                <small>MySQL, migrations, relationships</small>
+                                <h6>{{__('home.benefits_left_table_two_title')}}</h6>
+                                <small>{{__('home.benefits_left_table_two_subtitle')}}</small>
                             </div>
                         </div>
                         <div class="learning-item">
@@ -188,8 +187,8 @@
                                 <i class="fas fa-code" style="color: #777bb4;"></i>
                             </div>
                             <div class="learning-details">
-                                <h6>PHP Programming</h6>
-                                <small>OOP concepts, Eloquent ORM</small>
+                                <h6>{{__('home.benefits_left_table_three_title')}}</h6>
+                                <small>{{__('home.benefits_left_table_three_subtitle')}}</small>
                             </div>
                         </div>
                     </div>
@@ -200,8 +199,8 @@
                 <div class="learning-card">
                     <div class="learning-header">
                         <i class="fas fa-puzzle-piece fa-2x mb-3" style="color: var(--accent-color);"></i>
-                        <h4>Supporting Skills</h4>
-                        <p class="text-muted">What I picked up along the way</p>
+                        <h4>{{__('home.benefits_right_table_title')}}</h4>
+                        <p class="text-muted">{{__('home.benefits_right_table_subtitle')}}</p>
                     </div>
                     <div class="learning-list">
                         <div class="learning-item">
@@ -209,8 +208,8 @@
                                 <i class="fab fa-html5" style="color: #e34f26;"></i>
                             </div>
                             <div class="learning-details">
-                                <h6>Blade Templates</h6>
-                                <small>Laravel's templating engine</small>
+                                <h6>{{__('home.benefits_right_table_one_title')}}</h6>
+                                <small>{{__('home.benefits_right_table_one_subtitle')}}</small>
                             </div>
                         </div>
                         <div class="learning-item">
@@ -218,8 +217,8 @@
                                 <i class="fab fa-bootstrap" style="color: #7952b3;"></i>
                             </div>
                             <div class="learning-details">
-                                <h6>Bootstrap CSS</h6>
-                                <small>Responsive design basics</small>
+                                <h6>{{__('home.benefits_right_table_two_title')}}</h6>
+                                <small>{{__('home.benefits_right_table_two_subtitle')}}</small>
                             </div>
                         </div>
                         <div class="learning-item">
@@ -227,8 +226,8 @@
                                 <i class="fab fa-git-alt" style="color: #f05032;"></i>
                             </div>
                             <div class="learning-details">
-                                <h6>Version Control</h6>
-                                <small>Git for project management</small>
+                                <h6>{{__('home.benefits_right_table_three_title')}}</h6>
+                                <small>{{__('home.benefits_right_table_three_subtitle')}}</small>
                             </div>
                         </div>
                     </div>
@@ -241,33 +240,33 @@
                 <div class="implementation-card">
                     <h4 class="text-center mb-4" style="color: var(--text-primary);">
                         <i class="fas fa-wrench me-2" style="color: var(--primary-color);"></i>
-                        Technical Implementation
+                        {{__('home.benefits_under_table_title')}}
                     </h4>
                     <div class="row">
                         <div class="col-md-6">
                             <h6 style="color: var(--primary-color);">
                                 <i class="fas fa-check-circle me-2"></i>
-                                Backend Features I Built
+                                {{__('home.benefits_under_table_left_title')}}
                             </h6>
                             <ul class="feature-list">
-                                <li>RESTful API routes for CRUD operations</li>
-                                <li>Database relationships (Many-to-Many)</li>
-                                <li>Form validation and error handling</li>
-                                <li>File upload functionality</li>
-                                <li>Dynamic content filtering</li>
+                                <li>{{__('home.benefits_under_table_left_one')}}</li>
+                                <li>{{__('home.benefits_under_table_left_two')}}</li>
+                                <li>{{__('home.benefits_under_table_left_three')}}</li>
+                                <li>{{__('home.benefits_under_table_left_four')}}</li>
+                                <li>{{__('home.benefits_under_table_left_five')}}</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <h6 style="color: var(--primary-color);">
                                 <i class="fas fa-lightbulb me-2"></i>
-                                Challenges I Overcame
+                                {{__('home.benefits_under_table_right_title')}}
                             </h6>
                             <ul class="feature-list">
-                                <li>Understanding MVC architecture</li>
-                                <li>Working with Eloquent relationships</li>
-                                <li>Implementing dynamic color theming</li>
-                                <li>Creating responsive layouts</li>
-                                <li>Managing database migrations</li>
+                                <li>{{__('home.benefits_under_table_right_one')}}</li>
+                                <li>{{__('home.benefits_under_table_right_two')}}</li>
+                                <li>{{__('home.benefits_under_table_right_three')}}</li>
+                                <li>{{__('home.benefits_under_table_right_four')}}</li>
+                                <li>{{__('home.benefits_under_table_right_five')}}</li>
                             </ul>
                         </div>
                     </div>
@@ -278,8 +277,8 @@
 
     <section class="mb-5">
         <div class="text-center mb-4">
-            <h2 class="section-title">My Learning Journey</h2>
-            <p class="section-subtitle">Where I am and where I'm heading</p>
+            <h2 class="section-title">{{__('home.education_title')}}</h2>
+            <p class="section-subtitle">{{__('home.education_subtitle')}}</p>
         </div>
 
         <div class="row">
@@ -288,12 +287,12 @@
                     <div class="journey-icon">
                         <i class="fas fa-graduation-cap fa-2x" style="color: var(--primary-color);"></i>
                     </div>
-                    <h5>Currently Learning</h5>
+                    <h5>{{__('home.education_left_table_title')}}</h5>
                     <ul class="journey-list">
-                        <li>Advanced Laravel features</li>
-                        <li>API development</li>
-                        <li>Database optimization</li>
-                        <li>Testing with PHPUnit</li>
+                        <li>{{__('home.education_left_table_one')}}</li>
+                        <li>{{__('home.education_left_table_two')}}</li>
+                        <li>{{__('home.education_left_table_three')}}</li>
+                        <li>{{__('home.education_left_table_four')}}</li>
                     </ul>
                 </div>
             </div>
@@ -302,12 +301,12 @@
                     <div class="journey-icon">
                         <i class="fas fa-target fa-2x" style="color: var(--accent-color);"></i>
                     </div>
-                    <h5>Next Goals</h5>
+                    <h5>{{__('home.education_middle_table_title')}}</h5>
                     <ul class="journey-list">
-                        <li>Learn docker</li>
-                        <li>Explore microservices</li>
-                        <li>Study system design</li>
-                        <li>Practice algorithms</li>
+                        <li>{{__('home.education_middle_table_one')}}</li>
+                        <li>{{__('home.education_middle_table_two')}}</li>
+                        <li>{{__('home.education_middle_table_three')}}</li>
+                        <li>{{__('home.education_middle_table_four')}}</li>
                     </ul>
                 </div>
             </div>
@@ -316,12 +315,12 @@
                     <div class="journey-icon">
                         <i class="fas fa-rocket fa-2x" style="color: var(--secondary-color);"></i>
                     </div>
-                    <h5>Dream Job</h5>
+                    <h5>{{__('home.education_right_table_title')}}</h5>
                     <ul class="journey-list">
-                        <li>Backend Developer</li>
-                        <li>Work with APIs</li>
-                        <li>Build scalable systems</li>
-                        <li>Join a tech team</li>
+                        <li>{{__('home.education_right_table_one')}}</li>
+                        <li>{{__('home.education_right_table_two')}}</li>
+                        <li>{{__('home.education_right_table_three')}}</li>
+                        <li>{{__('home.education_right_table_four')}}</li>
                     </ul>
                 </div>
             </div>
@@ -331,8 +330,8 @@
     @if($popularTags->count() > 0)
         <section class="mb-5">
             <div class="text-center mb-4">
-                <h2 class="section-title">Demo Categories</h2>
-                <p class="section-subtitle">Different content types I created for testing</p>
+                <h2 class="section-title">{{__('home.categories_title')}}</h2>
+                <p class="section-subtitle">{{__('home.categories_subtitle')}}</p>
             </div>
 
             <div class="demo-grid">
@@ -356,24 +355,32 @@
     <section class="cta-section">
         <div class="text-center">
             <h2 class="mb-3" style="color: white; font-family: 'Playfair Display', serif;">
-                Want to See My Code?
+                {{__('home.code_sharing_title')}}
             </h2>
             <p class="mb-4" style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
-                This project helped me learn so much about backend development.
-                Feel free to explore the demo content or learn more about my journey!
+                {{__('home.code_sharing_content')}}
             </p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
                 <a href="{{ route('blog.index') }}" class="btn btn-outline-light btn-lg">
                     <i class="fas fa-code me-2"></i>
-                    Explore Demo
+                    {{__('home.code_sharing_link')}}
                 </a>
-                <a href="{{ route('about') }}" class="btn btn-balanced btn-lg" style="background: white; color: var(--primary-color);">
+                <a href="{{ route('about') }}" class="btn btn-balanced btn-lg"
+                   style="background: white; color: var(--primary-color);">
                     <i class="fas fa-user me-2"></i>
-                    About My Journey
+                    {{__('home.code_sharing_button_about_me')}}
                 </a>
             </div>
         </div>
     </section>
+
+    <!-- Learning Project Notice -->
+    <div class="text-center mt-4">
+        <small class="text-muted">
+            <i class="fas fa-info-circle me-1"></i>
+            {{__('common.student_disclaimer')}}
+        </small>
+    </div>
 @endsection
 
 @push('styles')
@@ -595,7 +602,7 @@
 
         .journey-card.current {
             border-color: var(--primary-color);
-            background: linear-gradient(135deg, var(--primary-color)05, var(--accent-color)05);
+            background: linear-gradient(135deg, var(--primary-color) 05, var(--accent-color) 05);
         }
 
         .journey-card:hover {
@@ -695,7 +702,7 @@
             left: 20px;
             right: -20px;
             bottom: -20px;
-            background: linear-gradient(135deg, var(--primary-color)20, var(--accent-color)20);
+            background: linear-gradient(135deg, var(--primary-color) 20, var(--accent-color) 20);
             border-radius: 20px;
             z-index: -1;
         }

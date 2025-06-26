@@ -1,0 +1,85 @@
+<?php
+
+return [
+
+    // ───── Login Page ─────
+    'login_title' => 'Login to Your Account',
+    'welcome_back' => 'Welcome Back',
+    'sign_in_continue' => 'Sign in to continue to your dashboard',
+    'email_address' => 'Email Address',
+    'email_placeholder' => 'your.email@example.com',
+    'password' => 'Password',
+    'password_placeholder' => '••••••••',
+    'toggle_password' => 'Toggle password visibility',
+    'remember_me' => 'Remember me on this device',
+    'sign_in' => 'Sign In',
+    'forgot_password' => 'Forgot your password?',
+    'reset_password_link' => 'Reset Password',
+    'dont_have_account' => "Don't have an account?",
+    'create_account_link' => 'Create Account',
+    'or_sign_in_with' => 'or sign in with',
+    'continue_with_github' => 'Continue with GitHub',
+    'continue_with_google' => 'Continue with Google',
+    'secure_oauth' => 'Secure OAuth',
+    'quick_login' => 'Quick login',
+    'login_quote' => 'The only way to do great work is to love what you do.',
+    'login_quote_author' => '— Steve Jobs',
+
+    // ───── Register Page ─────
+    'register_title' => 'Create Your Account',
+    'join_community' => 'Join Our Community',
+    'create_account_to_start' => 'Create an account to get started',
+    'full_name' => 'Full Name',
+    'name_placeholder' => 'John Doe',
+    'username' => 'Username',
+    'username_placeholder' => 'johndoe',
+    'confirm_password' => 'Confirm Password',
+    'password_strength' => 'Password strength',
+    'too_weak' => 'Too weak',
+    'agree_terms' => 'I agree to the :terms and :privacy',
+    'create_account_button' => 'Create Account',
+    'already_have_account' => 'Already have an account?',
+    'sign_in_link' => 'Sign In',
+    'or_sign_up_with' => 'or sign up with',
+    'auto_fill_profile' => 'Auto-fill profile information',
+    'pre_verified_email' => 'Pre-verified email address',
+    'register_quote' => 'The beautiful thing about learning is that nobody can take it away from you.',
+    'register_quote_author' => '— B.B. King',
+
+    // ───── Forgot Password Page ─────
+    'forgot_password_title' => 'Forgot Your Password',
+    'forgot_password_heading' => 'Forgot Password',
+    'forgot_password_description' => 'Enter your email to reset your password',
+    'send_reset_link' => 'Send Reset Link',
+    'remember_password' => 'Remembered your password?',
+
+    // ───── Reset Password Page ─────
+    'reset_password_title' => 'Reset Your Password',
+    'reset_password_heading' => 'Reset Password',
+    'reset_password_description' => 'Enter your new password below',
+    'new_password' => 'New Password',
+    'reset_password_button' => 'Reset Password',
+
+    // ───── Reset Email ─────
+    'email_greeting' => 'Hello,',
+    'email_intro' => 'We received a request to reset the password for your **Your Blog** account. Click the button below to set a new password:',
+    'email_note' => 'If you did not request a password reset, please ignore this email or contact support if you have concerns.',
+    'email_thanks' => 'Thanks',
+    'email_team' => 'The Your Blog Team',
+    'email_subcopy' => 'If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:',
+
+// ───── Verify Email Page ─────
+    'verify_email_title' => 'Verify Your Email',
+    'verify_email_heading' => 'Verify Your Email',
+    'verify_email_instruction' => 'Check your inbox for a verification link',
+    'verification_sent' => 'A fresh verification link has been sent to your email address.',
+    'verification_check' => 'Before proceeding, please check your email for a verification link.',
+    'verification_not_received' => 'If you did not receive the email, click the button below to request another.',
+    'resend_verification' => 'Resend Verification Email',
+    'logout' => 'Logout',
+    'need_help' => 'Need Help?',
+    'verify_help_text' => 'If you\'re having trouble verifying your email, please contact our support team.',
+    'contact_support' => 'Contact Support',
+    'verify_quote' => 'The journey of a thousand miles begins with a single step.',
+    'verify_quote_author' => '— Lao Tzu',
+];

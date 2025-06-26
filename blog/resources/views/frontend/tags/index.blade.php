@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="mb-0">All Tags</h1>
+            <h1 class="mb-0">{{ __('tags.page_title') }}</h1>
         </div>
 
         @if ($message = Session::get('success'))
@@ -25,10 +25,12 @@
                             <div class="tag-body">
                                 <div class="tag-info mb-3">
                                     <div class="d-flex align-items-center mb-2">
-                                        <span class="color-dot me-2" style="background: {{ $tag->theme_color }};"></span>
+                                        <span class="color-dot me-2"
+                                              style="background: {{ $tag->theme_color }};"></span>
                                         <code class="small">{{ $tag->theme_color }}</code>
                                     </div>
-                                    <small class="text-muted">Slug: {{ $tag->slug }}</small>
+                                    <small class="text-muted">{{ __('tags.slug_label') }}
+                                        : {{ $tag->slug }}</small>
                                 </div>
 
                                 <div class="tag-actions d-flex gap-2">
@@ -40,12 +42,14 @@
             </div>
         @else
             <div class="text-center py-5">
-                <i class="fas fa-tags fa-3x text-muted mb-3"></i>
-                <h3>No Tags Yet</h3>
+                <i class="fas fa-tags fa-3x text-muted mb-3"
+                   aria-label="{{ __('tags.no_tags_icon_alt') }}"></i>
+                <h3>{{ __('tags.no_tags_title') }}</h3>
             </div>
         @endif
     </div>
 @endsection
+
 
 @push('styles')
     <style>
