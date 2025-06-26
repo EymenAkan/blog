@@ -1,0 +1,20 @@
+<?php
+return [
+    'edit_title' => 'Edit Comment',
+    'back_to_comments' => 'Back to Comments',
+    'comment_label' => 'Comment',
+    'update_button' => 'Update Comment',
+    'index_title' => 'Comments',
+    'all_comments' => 'All Comments',
+    'comment_list' => 'Comment List',
+    'no_comments' => 'No comments created yet.',
+    'table_comment' => 'Comment',
+    'table_post' => 'Post',
+    'table_user' => 'User',
+    'table_date' => 'Date',
+    'table_actions' => 'Actions',
+    'delete_confirm' => 'Are you sure?',
+    'footer_about' => 'About',
+    'footer_support' => 'Support',
+    'footer_contact' => 'Contact Us',
+];

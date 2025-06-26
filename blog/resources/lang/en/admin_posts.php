@@ -1,0 +1,22 @@
+<?php
+return [
+    'create_title' => 'Create New Post',
+    'title_label' => 'Title',
+    'content_label' => 'Content',
+    'tags_label' => 'Tags',
+    'create_button' => 'Create Post',
+    'edit_title' => 'Edit Post',
+    'update_button' => 'Update Post',
+    'index_title' => 'Admin Posts',
+    'all_posts' => 'All Posts',
+    'posts_header' => 'Posts',
+    'add_new_post' => 'Add New Post',
+    'no_posts' => 'No posts available.',
+    'table_title' => 'Title',
+    'table_content' => 'Content (Preview)',
+    'table_author' => 'Author',
+    'table_created_at' => 'Created At',
+    'table_actions' => 'Actions',
+    'delete_confirm' => 'Are you sure?',
+    'back_to_posts' => 'Back to Posts',
+];

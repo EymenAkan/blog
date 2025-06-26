@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Comments')
+@section('title', __('admin_comments.index_title'))
 
 @section('content')
     <div class="content-page">
@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex justify-content-between align-items-center">
-                            <h4 class="page-title">All Comments</h4>
+                            <h4 class="page-title">{{ __('admin_comments.all_comments') }}</h4>
                         </div>
                     </div>
                 </div>
@@ -25,21 +25,21 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="header-title">Comment List</h4>
+                                <h4 class="header-title">{{ __('admin_comments.comment_list') }}</h4>
                             </div>
                             <div class="card-body">
                                 @if($comments->isEmpty())
-                                    <p class="text-muted">No comments created yet.</p>
+                                    <p class="text-muted">{{ __('admin_comments.no_comments') }}</p>
                                 @else
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-hover table-centered m-0">
                                             <thead class="border-top border-bottom bg-light-subtle border-light">
                                             <tr>
-                                                <th>Comment</th>
-                                                <th>Post</th>
-                                                <th>User</th>
-                                                <th>Date</th>
-                                                <th>Actions</th>
+                                                <th>{{ __('admin_comments.table_comment') }}</th>
+                                                <th>{{ __('admin_comments.table_post') }}</th>
+                                                <th>{{ __('admin_comments.table_user') }}</th>
+                                                <th>{{ __('admin_comments.table_date') }}</th>
+                                                <th>{{ __('admin_comments.table_actions') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -56,7 +56,7 @@
                                                         </a>
                                                         <form action="{{ route('comments.destroy', $comment->id) }}"
                                                               method="POST" class="d-inline"
-                                                              onsubmit="return confirm('Are you sure?');">
+                                                              onsubmit="return confirm('{{ __('admin_comments.delete_confirm') }}');">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-sm btn-danger">
@@ -87,9 +87,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="text-md-end footer-links d-none d-md-block">
-                            <a href="javascript:void(0);">About</a>
-                            <a href="javascript:void(0);">Support</a>
-                            <a href="javascript:void(0);">Contact Us</a>
+                            <a href="javascript:void(0);">{{ __('admin_comments.footer_about') }}</a>
+                            <a href="javascript:void(0);">{{ __('admin_comments.footer_support') }}</a>
+                            <a href="javascript:void(0);">{{ __('admin_comments.footer_contact') }}</a>
                         </div>
                     </div>
                 </div>

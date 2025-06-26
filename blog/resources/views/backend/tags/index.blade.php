@@ -1,18 +1,17 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Tags')
+@section('title', __('b_tags.tags_title'))
 
 @section('content')
     <div class="content-page">
         <div class="content">
             <div class="container-fluid">
-
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex justify-content-between align-items-center">
-                            <h4 class="page-title">All Tags</h4>
+                            <h4 class="page-title">{{ __('b_tags.all_tags') }}</h4>
                             <a href="{{ route('tags.create') }}" class="btn btn-primary">
-                                <i class="ri-price-tag-3-line me-1"></i> Add New Tag
+                                <i class="ri-price-tag-3-line me-1"></i> {{ __('b_tags.add_new_tag') }}
                             </a>
                         </div>
                     </div>
@@ -29,20 +28,20 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="header-title">Tag List</h4>
+                                <h4 class="header-title">{{ __('b_tags.tag_list') }}</h4>
                             </div>
                             <div class="card-body">
                                 @if($tags->isEmpty())
-                                    <p class="text-muted">No tags created yet.</p>
+                                    <p class="text-muted">{{ __('b_tags.no_tags_created') }}</p>
                                 @else
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-hover table-centered m-0">
                                             <thead class="border-top border-bottom bg-light-subtle border-light">
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Slug</th>
-                                                <th>Theme Color</th>
-                                                <th>Actions</th>
+                                                <th>{{ __('b_tags.tag_name_label') }}</th>
+                                                <th>{{ __('b_tags.slug_label') }}</th>
+                                                <th>{{ __('b_tags.theme_color_label') }}</th>
+                                                <th>{{ __('b_tags.actions_label') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -57,15 +56,15 @@
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('tags.edit', $tag->id) }}"
-                                                           class="btn btn-sm btn-warning">
+                                                           class="btn btn-sm btn-warning" title="{{ __('b_tags.edit_tag_title') }}">
                                                             <i class="ri-edit-line"></i>
                                                         </a>
                                                         <form action="{{ route('tags.destroy', $tag->id) }}"
                                                               method="POST" class="d-inline"
-                                                              onsubmit="return confirm('Are you sure?');">
+                                                              onsubmit="return confirm('{{ __('b_tags.confirm_delete_tag') }}');">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                            <button type="submit" class="btn btn-sm btn-danger" title="Delete">
                                                                 <i class="ri-delete-bin-line"></i>
                                                             </button>
                                                         </form>
@@ -80,26 +79,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <script>document.write(new Date().getFullYear())</script>
-                        © Attex - Coderthemes.com
-                    </div>
-                    <div class="col-md-6">
-                        <div class="text-md-end footer-links d-none d-md-block">
-                            <a href="javascript:void(0);">About</a>
-                            <a href="javascript:void(0);">Support</a>
-                            <a href="javascript:void(0);">Contact Us</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Login to Your Account')
+@section('title', __('auth.login_title'))
 
 @section('content')
     <div class="auth-container">
@@ -12,8 +12,8 @@
                         <span class="brand-text">Your Blog</span>
                     </a>
                 </div>
-                <h1 class="auth-title">Welcome Back</h1>
-                <p class="auth-subtitle">Sign in to continue to your dashboard</p>
+                <h1 class="auth-title">{{ __('auth.welcome_back') }}</h1>
+                <p class="auth-subtitle">{{ __('auth.sign_in_continue') }}</p>
             </div>
 
             <div class="auth-body">
@@ -36,14 +36,14 @@
                 <form method="POST" action="{{ route('login') }}" class="auth-form">
                     @csrf
                     <div class="form-group mb-3">
-                        <label for="email" class="form-label">Email Address</label>
+                        <label for="email" class="form-label">{{ __('auth.email_address') }}</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="fas fa-envelope"></i>
                             </span>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                    id="email" name="email" value="{{ old('email') }}"
-                                   placeholder="your.email@example.com" required autofocus>
+                                   placeholder="{{ __('auth.email_placeholder') }}" required autofocus>
                         </div>
                         @error('email')
                         <div class="invalid-feedback d-block">
@@ -58,8 +58,9 @@
                                 <i class="fas fa-lock"></i>
                             </span>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                   id="password" name="password" placeholder="••••••••" required>
-                            <button type="button" class="btn btn-outline-secondary toggle-password" tabindex="-1">
+                                   id="password" name="password" placeholder="{{ __('auth.password_placeholder') }}" required>
+                            <button type="button" class="btn btn-outline-secondary toggle-password" tabindex="-1"
+                                    title="{{ __('auth.toggle_password') }}">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -73,9 +74,9 @@
                     <div class="form-group mb-4">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                    {{ old('remember') ? 'checked' : '' }}>
+                                {{ old('remember') ? 'checked' : '' }}>
                             <label class="form-check-label" for="remember">
-                                Remember me on this device
+                                {{ __('auth.remember_me') }}
                             </label>
                         </div>
                     </div>
@@ -83,7 +84,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-balanced btn-lg w-100">
                             <i class="fas fa-sign-in-alt me-2"></i>
-                            Sign In
+                            {{ __('auth.sign_in') }}
                         </button>
                     </div>
                 </form>
@@ -91,18 +92,18 @@
 
             <div class="auth-footer">
                 <p class="text-center mb-2">
-                    Forgot your password?
-                    <a href="{{ route('password.request') }}" class="auth-link">Reset Password</a>
+                    {{ __('auth.forgot_password') }}
+                    <a href="{{ route('password.request') }}" class="auth-link">{{ __('auth.reset_password_link') }}</a>
                 </p>
                 <p class="text-center mb-0">
-                    Don't have an account?
-                    <a href="{{ route('register') }}" class="auth-link">Create Account</a>
+                    {{ __('auth.dont_have_account') }}
+                    <a href="{{ route('register') }}" class="auth-link">{{ __('auth.create_account_link') }}</a>
                 </p>
             </div>
 
             <div class="auth-social">
                 <div class="divider">
-                    <span>or sign in with</span>
+                    <span>{{ __('auth.or_sign_in_with') }}</span>
                 </div>
                 <div class="social-buttons">
                     <a href="{{ route('socialite.redirect', 'github') }}"
@@ -110,7 +111,7 @@
                        data-provider="github"
                        onclick="handleSocialLogin(this, 'github')">
                         <i class="fab fa-github"></i>
-                        <span>Continue with GitHub</span>
+                        <span>{{ __('auth.continue_with_github') }}</span>
                     </a>
 
                     <a href="{{ route('socialite.redirect', 'google') }}"
@@ -118,18 +119,18 @@
                        data-provider="google"
                        onclick="handleSocialLogin(this, 'google')">
                         <i class="fab fa-google"></i>
-                        <span>Continue with Google</span>
+                        <span>{{ __('auth.continue_with_google') }}</span>
                     </a>
                 </div>
 
                 <div class="social-benefits">
                     <div class="benefit-item">
                         <i class="fas fa-shield-alt"></i>
-                        <span>Secure OAuth</span>
+                        <span>{{ __('auth.secure_oauth') }}</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-clock"></i>
-                        <span>Quick login</span>
+                        <span>{{ __('auth.quick_login') }}</span>
                     </div>
                 </div>
             </div>
@@ -138,8 +139,8 @@
         <div class="auth-image">
             <div class="auth-quote">
                 <i class="fas fa-quote-left fa-2x mb-3" style="opacity: 0.5;"></i>
-                <p class="quote-text">The only way to do great work is to love what you do.</p>
-                <p class="quote-author">— Steve Jobs</p>
+                <p class="quote-text">{{ __('auth.login_quote') }}</p>
+                <p class="quote-author">{{ __('auth.login_quote_author') }}</p>
             </div>
         </div>
     </div>

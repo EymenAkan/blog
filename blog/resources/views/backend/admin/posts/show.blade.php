@@ -18,7 +18,7 @@
                             @endforeach
                         </div>
                         <div>{!! nl2br(e($post->content)) !!}</div>
-                        <a href="{{ route('admin.posts.index') }}" class="btn btn-primary mt-3">Back to Posts</a>
+                        <a href="{{ route('admin.posts.index') }}" class="btn btn-primary mt-3">{{ __('admin_posts.back_to_posts') }}</a>
                     </div>
                 </div>
             </div>

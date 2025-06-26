@@ -21,7 +21,7 @@
     </a>
 
     <!-- Sidebar Hover Menu Toggle Button -->
-    <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" title="Show Full Sidebar">
+    <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ __('leftsidebar.show_full_sidebar') }}">
         <i class="ri-checkbox-blank-circle-line align-middle"></i>
     </div>
 
@@ -37,28 +37,28 @@
             <a href="pages-profile.html">
                 <img src="{{ url('backend/assets/images/users/avatar-1.jpg') }}" alt="user-image" height="42"
                      class="rounded-circle shadow-sm">
-                <span class="leftbar-user-name mt-2">{{ auth()->user()->name ?? 'Guest' }}</span>
+                <span class="leftbar-user-name mt-2">{{ auth()->user()->name ?? __('leftsidebar.guest_user') }}</span>
             </a>
         </div>
 
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title">Navigation</li>
+            <li class="side-nav-title">{{ __('leftsidebar.navigation_title') }}</li>
 
             <li class="side-nav-item">
                 <a href="{{ route('dashboard') }}" aria-expanded="false" class="side-nav-link">
                     <i class="ri-home-4-line"></i>
-                    <span> Anasayfa </span>
+                    <span> {{ __('leftsidebar.dashboard') }} </span>
                 </a>
             </li>
 
-            <li class="side-nav-title">Management</li>
+            <li class="side-nav-title">{{ __('leftsidebar.management_title') }}</li>
 
             <li class="side-nav-item">
                 <a href="{{ route('posts.index') }}" aria-expanded="false" class="side-nav-link">
                     <i class="ri-file-list-3-line"></i>
-                    <span> Postlar </span>
+                    <span> {{ __('leftsidebar.posts') }} </span>
                 </a>
             </li>
 
@@ -66,7 +66,7 @@
                 <li class="side-nav-item">
                     <a href="{{ route('tags.index') }}" aria-expanded="false" class="side-nav-link">
                         <i class="ri-price-tag-3-line"></i>
-                        <span> Etiketler </span>
+                        <span> {{ __('leftsidebar.tags') }} </span>
                     </a>
                 </li>
             @endif
@@ -74,7 +74,7 @@
             <li class="side-nav-item">
                 <a href="{{ route('backend.categories.index') }}" aria-expanded="false" class="side-nav-link">
                     <i class="ri-folder-4-line"></i>
-                    <span> Kategoriler </span>
+                    <span> {{ __('leftsidebar.categories') }} </span>
                 </a>
             </li>
 
@@ -82,13 +82,12 @@
                 <li class="side-nav-item">
                     <a href="{{ route('users.index') }}" aria-expanded="false" class="side-nav-link">
                         <i class="ri-user-3-line"></i>
-                        <span> Kullanıcı Yönetimi </span>
+                        <span> {{ __('leftsidebar.user_management') }} </span>
                     </a>
                 </li>
             @endif
 
         </ul>
-        <!--- End Sidemenu -->
 
         <div class="clearfix"></div>
     </div>

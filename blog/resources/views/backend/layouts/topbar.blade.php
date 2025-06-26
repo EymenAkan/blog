@@ -6,22 +6,22 @@
             <div class="logo-topbar">
                 <!-- Logo light -->
                 <a href="{{route('index')}}" class="logo-light">
-                                <span class="logo-lg">
-                                    <img src="{{url('backend/assets/images/logo.png')}}" alt="logo">
-                                </span>
+                    <span class="logo-lg">
+                        <img src="{{url('backend/assets/images/logo.png')}}" alt="logo">
+                    </span>
                     <span class="logo-sm">
-                                    <img src="{{url('backend/assets/images/logo-sm.png')}}" alt="small logo">
-                                </span>
+                        <img src="{{url('backend/assets/images/logo-sm.png')}}" alt="small logo">
+                    </span>
                 </a>
 
                 <!-- Logo Dark -->
                 <a href="{{route('index')}}" class="logo-dark">
-                                <span class="logo-lg">
-                                    <img src="{{url('backend/assets/images/logo-dark.png')}}" alt="dark logo">
-                                </span>
+                    <span class="logo-lg">
+                        <img src="{{url('backend/assets/images/logo-dark.png')}}" alt="dark logo">
+                    </span>
                     <span class="logo-sm">
-                                    <img src="{{url('backend/assets/images/logo-sm.png')}}" alt="small logo">
-                                </span>
+                        <img src="{{url('backend/assets/images/logo-sm.png')}}" alt="small logo">
+                    </span>
                 </a>
             </div>
 
@@ -43,7 +43,7 @@
             <div class="app-search dropdown d-none d-lg-block">
                 <form>
                     <div class="input-group">
-                        <input type="search" class="form-control dropdown-toggle" placeholder="Search..."
+                        <input type="search" class="form-control dropdown-toggle" placeholder="{{ __('admin_topbar.search_placeholder') }}"
                                id="top-search">
                         <span class="ri-search-line search-icon"></span>
                     </div>
@@ -52,30 +52,30 @@
                 <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
                     <!-- item-->
                     <div class="dropdown-header noti-title">
-                        <h5 class="text-overflow mb-1">Found <b class="text-decoration-underline">08</b> results</h5>
+                        <h5 class="text-overflow mb-1">{{ __('admin_topbar.search_results') }} <b class="text-decoration-underline">08</b></h5>
                     </div>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <i class="ri-file-chart-line fs-16 me-1"></i>
-                        <span>Analytics Report</span>
+                        <span>{{ __('admin_topbar.analytics_report') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <i class="ri-lifebuoy-line fs-16 me-1"></i>
-                        <span>How can I help you?</span>
+                        <span>{{ __('admin_topbar.help_text') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <i class="ri-user-settings-line fs-16 me-1"></i>
-                        <span>User profile settings</span>
+                        <span>{{ __('admin_topbar.user_profile_settings') }}</span>
                     </a>
 
                     <!-- item-->
                     <div class="dropdown-header noti-title">
-                        <h6 class="text-overflow mt-2 mb-1 text-uppercase">Users</h6>
+                        <h6 class="text-overflow mt-2 mb-1 text-uppercase">{{ __('admin_topbar.users_title') }}</h6>
                     </div>
 
                     <div class="notification-list">
@@ -117,7 +117,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
                     <form class="p-3">
-                        <input type="search" class="form-control" placeholder="Search ..."
+                        <input type="search" class="form-control" placeholder="{{ __('admin_topbar.search_placeholder') }}"
                                aria-label="Recipient's username">
                     </form>
                 </div>
@@ -128,7 +128,7 @@
                    aria-haspopup="false" aria-expanded="false">
                     <img src="{{url('backend/assets/images/flags/us.jpg')}}" alt="user-image" class="me-0 me-sm-1"
                          height="12">
-                    <span class="align-middle d-none d-lg-inline-block">English</span> <i
+                    <span class="align-middle d-none d-lg-inline-block">{{ __('admin_topbar.language_english') }}</span> <i
                         class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
@@ -136,25 +136,25 @@
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
                         <img src="{{url('backend/assets/images/flags/germany.jpg')}}" alt="user-image" class="me-1"
-                             height="12"> <span class="align-middle">German</span>
+                             height="12"> <span class="align-middle">{{ __('admin_topbar.language_german') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
                         <img src="{{url('backend/assets/images/flags/italy.jpg')}}" alt="user-image" class="me-1"
-                             height="12"> <span class="align-middle">Italian</span>
+                             height="12"> <span class="align-middle">{{ __('admin_topbar.language_italian') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
                         <img src="{{url('backend/assets/images/flags/spain.jpg')}}" alt="user-image" class="me-1"
-                             height="12"> <span class="align-middle">Spanish</span>
+                             height="12"> <span class="align-middle">{{ __('admin_topbar.language_spanish') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
                         <img src="{{url('backend/assets/images/flags/russia.jpg')}}" alt="user-image" class="me-1"
-                             height="12"> <span class="align-middle">Russian</span>
+                             height="12"> <span class="align-middle">{{ __('admin_topbar.language_russian') }}</span>
                     </a>
 
                 </div>
@@ -170,11 +170,11 @@
                     <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="m-0 fs-16 fw-semibold"> Notification</h6>
+                                <h6 class="m-0 fs-16 fw-semibold">{{ __('admin_topbar.notification_title') }}</h6>
                             </div>
                             <div class="col-auto">
-                                <a href="javascript: void(0);" class="text-dark text-decoration-underline">
-                                    <small>Clear All</small>
+                                <a href="javascript:void(0);" class="text-dark text-decoration-underline">
+                                    <small>{{ __('admin_topbar.clear_all') }}</small>
                                 </a>
                             </div>
                         </div>
@@ -182,9 +182,8 @@
 
                     <div style="max-height: 300px;" data-simplebar>
 
-                        <h5 class="text-muted fs-12 fw-bold p-2 text-uppercase mb-0">Today</h5>
+                        <h5 class="text-muted fs-12 fw-bold p-2 text-uppercase mb-0">{{ __('admin_topbar.today') }}</h5>
                         <!-- item-->
-
                         <a href="javascript:void(0);"
                            class="dropdown-item p-0 notify-item unread-noti card m-0 shadow-none">
                             <div class="card-body">
@@ -223,7 +222,7 @@
                             </div>
                         </a>
 
-                        <h5 class="text-muted fs-12 fw-bold p-2 mb-0 text-uppercase">Yesterday</h5>
+                        <h5 class="text-muted fs-12 fw-bold p-2 mb-0 text-uppercase">{{ __('admin_topbar.yesterday') }}</h5>
 
                         <!-- item-->
                         <a href="javascript:void(0);"
@@ -291,7 +290,7 @@
                     <!-- All-->
                     <a href="javascript:void(0);"
                        class="dropdown-item text-center text-primary text-decoration-underline fw-bold notify-item border-top border-light py-2">
-                        View All
+                        {{ __('admin_topbar.view_all') }}
                     </a>
 
                 </div>
@@ -309,19 +308,19 @@
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
                                     <img src="{{url('backend/assets/images/brands/github.png')}}" alt="Github">
-                                    <span>GitHub</span>
+                                    <span>{{ __('admin_topbar.app_github') }}</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
                                     <img src="{{url('backend/assets/images/brands/bitbucket.png')}}" alt="bitbucket">
-                                    <span>Bitbucket</span>
+                                    <span>{{ __('admin_topbar.app_bitbucket') }}</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
                                     <img src="{{url('backend/assets/images/brands/dropbox.png')}}" alt="dropbox">
-                                    <span>Dropbox</span>
+                                    <span>{{ __('admin_topbar.app_dropbox') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -330,19 +329,19 @@
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
                                     <img src="{{url('backend/assets/images/brands/slack.png')}}" alt="slack">
-                                    <span>Slack</span>
+                                    <span>{{ __('admin_topbar.app_slack') }}</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
                                     <img src="{{url('backend/assets/images/brands/dribbble.png')}}" alt="dribbble">
-                                    <span>Dribbble</span>
+                                    <span>{{ __('admin_topbar.app_dribbble') }}</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
                                     <img src="{{url('backend/assets/images/brands/behance.png')}}" alt="Behance">
-                                    <span>Behance</span>
+                                    <span>{{ __('admin_topbar.app_behance') }}</span>
                                 </a>
                             </div>
                         </div> <!-- end row-->
@@ -359,11 +358,10 @@
 
             <li class="d-none d-sm-inline-block">
                 <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left"
-                     title="Theme Mode">
+                     title="{{ __('admin_topbar.theme_mode') }}">
                     <i class="ri-moon-line fs-22"></i>
                 </div>
             </li>
-
 
             <li class="d-none d-md-inline-block">
                 <a class="nav-link" href="#" data-toggle="fullscreen">
@@ -374,43 +372,43 @@
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#"
                    role="button" aria-haspopup="false" aria-expanded="false">
-                                <span class="account-user-avatar">
-                                    <img src="{{url('backend/assets/images/users/avatar-1.jpg')}}" alt="user-image"
-                                         width="32" class="rounded-circle">
-                                </span>
+                    <span class="account-user-avatar">
+                        <img src="{{url('backend/assets/images/users/avatar-1.jpg')}}" alt="user-image"
+                             width="32" class="rounded-circle">
+                    </span>
                     <span class="d-lg-flex flex-column gap-1 d-none">
-                                    <h5 class="my-0">Tosha Minner</h5>
-                                    <h6 class="my-0 fw-normal">Founder</h6>
-                                </span>
+                        <h5 class="my-0">{{ auth()->user()->name ?? 'Guest' }}</h5>
+                        <h6 class="my-0 fw-normal">{{ auth()->user()->role ?? 'User' }}</h6>
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                     <!-- item-->
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
+                        <h6 class="text-overflow m-0">{{ __('admin_topbar.welcome') }}</h6>
                     </div>
 
                     <!-- item-->
                     <a href="{{route('profile.edit')}}" class="dropdown-item">
                         <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
-                        <span>My Account</span>
+                        <span>{{ __('admin_topbar.my_account') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="pages-profile.html" class="dropdown-item">
                         <i class="ri-settings-4-line fs-18 align-middle me-1"></i>
-                        <span>Settings</span>
+                        <span>{{ __('admin_topbar.settings') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="pages-faq.html" class="dropdown-item">
                         <i class="ri-customer-service-2-line fs-18 align-middle me-1"></i>
-                        <span>Support</span>
+                        <span>{{ __('admin_topbar.support') }}</span>
                     </a>
 
                     <!-- item-->
                     <a href="auth-lock-screen.html" class="dropdown-item">
                         <i class="ri-lock-password-line fs-18 align-middle me-1"></i>
-                        <span>Lock Screen</span>
+                        <span>{{ __('admin_topbar.lock_screen') }}</span>
                     </a>
 
                     <!-- item-->
@@ -419,7 +417,7 @@
                         <button type="submit" class="dropdown-item"
                                 style="background: none; border: none; width: 100%; text-align: left; padding: 0.5rem 1rem;">
                             <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
-                            <span>Logout</span>
+                            <span>{{ __('admin_topbar.logout') }}</span>
                         </button>
                     </form>
                 </div>

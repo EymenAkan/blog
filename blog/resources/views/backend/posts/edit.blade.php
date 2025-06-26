@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Edit Post')
+@section('title', __('b_posts.edit_title'))
 
 @section('content')
     <div class="content-page">
@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
-                            <h4 class="page-title">Edit Post</h4>
+                            <h4 class="page-title">{{ __('b_posts.edit_title') }}</h4>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                             @method('PUT')
 
                             <div class="mb-3">
-                                <label for="title" class="form-label">Title</label>
+                                <label for="title" class="form-label">{{ __('b_posts.title_label') }}</label>
                                 <input type="text" class="form-control @error('title') is-invalid @enderror"
                                        id="title" name="title" value="{{ old('title', $post->title) }}">
                                 @error('title')
@@ -29,7 +29,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="content" class="form-label">Content</label>
+                                <label for="content" class="form-label">{{ __('b_posts.content_label') }}</label>
                                 <textarea class="form-control @error('content') is-invalid @enderror"
                                           id="content" name="content" rows="6">{{ old('content', $post->content) }}</textarea>
                                 @error('content')
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">Change Image</label>
+                                <label for="image" class="form-label">{{ __('b_posts.change_image_label') }}</label>
                                 <input class="form-control @error('image') is-invalid @enderror" type="file"
                                        id="image" name="image">
                                 @error('image')
@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="categories" class="form-label">Categories</label>
+                                <label for="categories" class="form-label">{{ __('b_posts.categories_label') }}</label>
                                 <select class="form-select" id="categories" name="categories[]" multiple>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}"
@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="tags" class="form-label">Tags</label>
+                                <label for="tags" class="form-label">{{ __('b_posts.tags_label') }}</label>
                                 <select class="form-select @error('tags') is-invalid @enderror" id="tags" name="tags[]" multiple>
                                     @foreach($tags as $tag)
                                         <option value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'selected' : '' }}>
@@ -72,7 +72,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Update Post</button>
+                            <button type="submit" class="btn btn-primary">{{ __('b_posts.update_button') }}</button>
                         </form>
                     </div>
                 </div>

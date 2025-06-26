@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Categories')
+@section('title', __('admin_categories.index_title'))
 
 @section('content')
     <div class="content-page" style="margin-top: 0; padding-top: 0;">
@@ -9,9 +9,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex justify-content-between align-items-center">
-                            <h4 class="page-title">All Categories</h4>
+                            <h4 class="page-title">{{ __('admin_categories.all_categories') }}</h4>
                             <a href="{{ route('backend.categories.create') }}" class="btn btn-primary">
-                                <i class="ri-add-line me-1"></i> Add New Category
+                                <i class="ri-add-line me-1"></i> {{ __('admin_categories.add_new_category') }}
                             </a>
                         </div>
                     </div>
@@ -28,19 +28,19 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="header-title">Category List</h4>
+                                <h4 class="header-title">{{ __('admin_categories.category_list') }}</h4>
                             </div>
                             <div class="card-body">
                                 @if($categories->isEmpty())
-                                    <p class="text-muted">No categories created yet.</p>
+                                    <p class="text-muted">{{ __('admin_categories.no_categories') }}</p>
                                 @else
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-hover table-centered m-0">
                                             <thead class="border-top border-bottom bg-light-subtle border-light">
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Slug</th>
-                                                <th>Actions</th>
+                                                <th>{{ __('admin_categories.table_name') }}</th>
+                                                <th>{{ __('admin_categories.table_slug') }}</th>
+                                                <th>{{ __('admin_categories.table_actions') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -55,7 +55,7 @@
                                                         </a>
                                                         <form action="{{ route('backend.categories.destroy', $category->id) }}"
                                                               method="POST" class="d-inline"
-                                                              onsubmit="return confirm('Are you sure?');">
+                                                              onsubmit="return confirm('{{ __('admin_categories.delete_confirm') }}');">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-sm btn-danger">
@@ -85,9 +85,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="text-md-end footer-links d-none d-md-block">
-                            <a href="javascript:void(0);">About</a>
-                            <a href="javascript:void(0);">Support</a>
-                            <a href="javascript:void(0);">Contact Us</a>
+                            <a href="javascript:void(0);">{{ __('admin_categories.footer_about') }}</a>
+                            <a href="javascript:void(0);">{{ __('admin_categories.footer_support') }}</a>
+                            <a href="javascript:void(0);">{{ __('admin_categories.footer_contact') }}</a>
                         </div>
                     </div>
                 </div>

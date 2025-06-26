@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Dashboard')
+@section('title', __('b_posts.index_title'))
 
 @section('content')
     <div class="content-page">
@@ -13,7 +13,7 @@
                                 <form class="d-flex">
                                     <div class="input-group">
                                         <input type="text" class="form-control shadow border-0" id="dash-daterange"
-                                               placeholder="Select date range">
+                                               placeholder="{{ __('b_posts.select_date_range') }}">
                                         <span class="input-group-text bg-primary border-primary text-white">
                                             <i class="ri-calendar-todo-fill fs-13"></i>
                                         </span>
@@ -23,7 +23,7 @@
                                     </a>
                                 </form>
                             </div>
-                            <h4 class="page-title">My Posts</h4>
+                            <h4 class="page-title">{{ __('b_posts.my_posts') }}</h4>
                         </div>
                     </div>
                 </div>
@@ -39,34 +39,33 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h4 class="header-title">Your Posts</h4>
+                                <h4 class="header-title">{{ __('b_posts.your_posts') }}</h4>
                                 <p>@php
                                     $roles = auth()->user()->roles()->pluck('name')->toArray();
                                 @endphp
-                                <p>User Roles: {{ implode(', ', $roles) ?: 'No roles assigned' }}</p>
+                                <p>{{ __('b_posts.no_roles_assigned') }}</p>
                                 </p>
                                 <a href="{{ route('posts.create') }}" class="btn btn-primary btn-balanced">
-                                    <i class="ri-add-line me-1"></i> Add New Post
+                                    <i class="ri-add-line me-1"></i> {{ __('b_posts.add_new_post') }}
                                 </a>
                             </div>
                             <div class="card-body">
                                 @if($posts->isEmpty())
-                                    <p class="text-muted">You haven't created any posts yet.</p>
-                                    <a href="{{ route('posts.create') }}" class="btn btn-primary btn-sm">Create
-                                        Your First Post</a>
+                                    <p class="text-muted">{{ __('b_posts.no_posts') }}</p>
+                                    <a href="{{ route('posts.create') }}" class="btn btn-primary btn-sm">{{ __('b_posts.create_first_post') }}</a>
                                 @else
                                     <div class="table-responsive">
                                         <table
                                             class="table table-borderless table-hover table-nowrap table-centered m-0">
                                             <thead class="border-top border-bottom bg-light-subtle border-light">
                                             <tr>
-                                                <th>Title</th>
-                                                <th>Content (Preview)</th>
-                                                <th>Created At</th>
+                                                <th>{{ __('b_posts.table_title') }}</th>
+                                                <th>{{ __('b_posts.table_content') }}</th>
+                                                <th>{{ __('b_posts.table_created_at') }}</th>
                                                 @if(auth()->user()->hasRole('admin'))
-                                                    <th>Author</th>
+                                                    <th>{{ __('b_posts.table_author') }}</th>
                                                 @endif
-                                                <th>Actions</th>
+                                                <th>{{ __('b_posts.table_actions') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -87,7 +86,7 @@
                                                                 class="ri-edit-line"></i></a>
                                                         <form action="{{ route('posts.destroy', $post->slug) }}"
                                                               method="POST" style="display: inline;"
-                                                              onsubmit="return confirm('Are you sure?');">
+                                                              onsubmit="return confirm('{{ __('b_posts.delete_confirm') }}');">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-sm btn-danger"><i
@@ -117,9 +116,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="text-md-end footer-links d-none d-md-block">
-                            <a href="javascript: void(0);">About</a>
-                            <a href="javascript: void(0);">Support</a>
-                            <a href="javascript: void(0);">Contact Us</a>
+                            <a href="javascript: void(0);">{{ __('b_posts.footer_about') }}</a>
+                            <a href="javascript: void(0);">{{ __('b_posts.footer_support') }}</a>
+                            <a href="javascript: void(0);">{{ __('b_posts.footer_contact') }}</a>
                         </div>
                     </div>
                 </div>

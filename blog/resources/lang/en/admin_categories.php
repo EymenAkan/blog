@@ -1,0 +1,22 @@
+<?php
+return [
+    'create_title' => 'Create Category',
+    'edit_title' => 'Edit Category',
+    'index_title' => 'Categories',
+    'all_categories' => 'All Categories',
+    'category_list' => 'Category List',
+    'category_name_label' => 'Category Name',
+    'category_name_placeholder' => 'Enter category name',
+    'create_button' => 'Create Category',
+    'update_button' => 'Update Category',
+    'add_new_category' => 'Add New Category',
+    'no_categories' => 'No categories created yet.',
+    'back_to_categories' => 'Back to Categories',
+    'table_name' => 'Name',
+    'table_slug' => 'Slug',
+    'table_actions' => 'Actions',
+    'delete_confirm' => 'Are you sure?',
+    'footer_about' => 'About',
+    'footer_support' => 'Support',
+    'footer_contact' => 'Contact Us',
+];
